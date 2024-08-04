@@ -9,7 +9,7 @@ export type FunnelStepChangeFunction = (step: string, options?: RoutesEventType)
 
 export type RouteFunnelProps<Steps extends NonEmptyArray<string>> = Omit<FunnelProps<Steps>, "steps" | "step">;
 
-export type FlowOptions<T extends NonEmptyArray<string>> = {
+export type UseFunnelOptions<T extends NonEmptyArray<string>> = {
 	step?: T[number];
 	done?: (doneUrl: string) => void;
 	initialStep?: T[number];

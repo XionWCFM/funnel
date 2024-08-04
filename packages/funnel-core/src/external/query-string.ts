@@ -4,19 +4,19 @@ interface UrlParams {
 	[key: string]: string | number | boolean | null | undefined;
 }
 
-export const getOriginAndPathname = () => {
+const getOriginAndPathname = () => {
 	if (typeof window === "undefined") return "";
 	return `${window.location.origin}${window.location.pathname}`;
 };
 
-export const getCurrentQueryParams = (): UrlParams => {
+const getCurrentQueryParams = (): UrlParams => {
 	if (typeof window === "undefined") return {};
 
 	const search = window.location.search;
 	return qs.parse(search, { ignoreQueryPrefix: true }) as UrlParams;
 };
 
-export const updateQueryParams = (params: UrlParams): string => {
+const updateQueryParams = (params: UrlParams): string => {
 	if (typeof window === "undefined") return "";
 
 	const currentParams = getCurrentQueryParams();
@@ -30,7 +30,7 @@ export const updateQueryParams = (params: UrlParams): string => {
 	return newQueryString;
 };
 // 특정 쿼리스트링을 삭제하는 함수
-export const deleteQueryParams = (keys: string[]): string => {
+const deleteQueryParams = (keys: string[]): string => {
 	if (typeof window === "undefined") return "";
 
 	const currentParams = getCurrentQueryParams();
@@ -42,4 +42,11 @@ export const deleteQueryParams = (keys: string[]): string => {
 
 	const newQueryString = qs.stringify(currentParams, { addQueryPrefix: true });
 	return newQueryString;
+};
+
+export const funnelQs = {
+	getOriginAndPathname,
+	getCurrentQueryParams,
+	updateQueryParams,
+	deleteQueryParams,
 };

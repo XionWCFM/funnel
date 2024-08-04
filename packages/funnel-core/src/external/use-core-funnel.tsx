@@ -4,9 +4,9 @@ import { Funnel } from "./funnel";
 import { FunnelPubsub } from "./funnel-pubsub";
 import { Guard } from "./guard";
 import { Step } from "./step";
-import type { FlowOptions, GuardProps, NonEmptyArray, RouteFunnelProps, StepProps } from "./types";
+import type { GuardProps, NonEmptyArray, RouteFunnelProps, StepProps, UseFunnelOptions } from "./types";
 
-export const useCoreFunnel = <Steps extends NonEmptyArray<string>>(steps: Steps, options?: FlowOptions<Steps>) => {
+export const useCoreFunnel = <Steps extends NonEmptyArray<string>>(steps: Steps, options?: UseFunnelOptions<Steps>) => {
 	const initialState = options?.initialStep ?? steps[0];
 	const [_step, _setStep] = useDraft(initialState);
 	const [_pubsub] = useState(() => new FunnelPubsub());
