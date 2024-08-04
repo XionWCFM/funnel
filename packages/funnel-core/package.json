@@ -1,36 +1,36 @@
 {
-	"name": "@xionhub/funnel-core",
-	"version": "0.0.0",
-	"private": true,
-	"license": "MIT",
-	"exports": {
-		".": {
-			"import": {
-				"types": "./dist/index.d.mts",
-				"default": "./dist/index.mjs"
-			},
-			"require": {
-				"types": "./dist/index.d.ts",
-				"default": "./dist/index.js"
-			}
-		}
-	},
-	"scripts": {
-		"build": "tsup"
-	},
-	"publishConfig": {
-		"access": "public"
-	},
-	"devDependencies": {
-		"@types/qs": "^6.9.15",
-		"@types/react": "^18",
-		"qs": "^6.13.0",
-		"tsup": "^8.1.0",
-		"typescript": "latest"
-	},
-	"peerDependencies": {
-		"react": "^16",
-		"react-dom": "^16",
-		"qs": "^6"
-	}
+  "name": "@xionhub/funnel-core",
+  "version": "0.0.0",
+  "private": true,
+  "license": "MIT",
+  "exports": {
+    ".": {
+      "import": {
+        "types": "./dist/index.d.mts",
+        "default": "./dist/index.mjs"
+      },
+      "require": {
+        "types": "./dist/index.d.ts",
+        "default": "./dist/index.js"
+      }
+    }
+  },
+  "scripts": {
+    "build": "tsup"
+  },
+  "publishConfig": {
+    "access": "public"
+  },
+  "devDependencies": {
+    "@types/qs": "^6.9.15",
+    "@types/react": "^18",
+    "qs": "^6.13.0",
+    "tsup": "^8.1.0",
+    "typescript": "latest"
+  },
+  "peerDependencies": {
+    "react": "^16",
+    "react-dom": "^16",
+    "qs": "^6"
+  }
 }

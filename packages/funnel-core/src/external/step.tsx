@@ -4,14 +4,14 @@ import { useIsomorphicLayoutEffect } from "../internal/use-isomorphic-layout-eff
 import type { NonEmptyArray, StepProps } from "./types";
 
 export const Step = <Steps extends NonEmptyArray<string>>({
-	children,
-	pubsub,
-	onFunnelRestrictEvent,
+  children,
+  pubsub,
+  onFunnelRestrictEvent,
 }: StepProps<Steps>) => {
-	const handler = onFunnelRestrictEvent ?? noop;
-	useIsomorphicLayoutEffect(() => {
-		const unsubscribe = pubsub?.subscribe("FUNNEL_RESTRICT_EVENT", handler);
-		return () => unsubscribe?.();
-	}, []);
-	return children;
+  const handler = onFunnelRestrictEvent ?? noop;
+  useIsomorphicLayoutEffect(() => {
+    const unsubscribe = pubsub?.subscribe("FUNNEL_RESTRICT_EVENT", handler);
+    return () => unsubscribe?.();
+  }, []);
+  return children;
 };
