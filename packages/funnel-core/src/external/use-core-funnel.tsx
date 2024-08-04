@@ -10,7 +10,7 @@ export const useCoreFunnel = <Steps extends NonEmptyArray<string>>(steps: Steps,
 	const initialState = options?.initialStep ?? steps[0];
 	const [_step, _setStep] = useDraft(initialState);
 	const [_pubsub] = useState(() => new FunnelPubsub());
-	const step = options?.step ?? _step;
+	const step = (options?.step ?? _step) as Steps[number];
 	const funnelId = options?.funnelId ?? "step";
 	const pubsub = options?.pubsub ?? _pubsub;
 	const _onStepChange = (param: Steps[number]) => {

@@ -11,7 +11,6 @@ export type RouteFunnelProps<Steps extends NonEmptyArray<string>> = Omit<FunnelP
 
 export type UseFunnelOptions<T extends NonEmptyArray<string>> = {
 	step?: T[number];
-	done?: (doneUrl: string) => void;
 	initialStep?: T[number];
 	funnelId?: string;
 	pubsub?: FunnelPubsub;
@@ -39,3 +38,16 @@ export interface GuardProps {
 	children?: ReactNode;
 	fallback?: ReactNode;
 }
+
+export type FunnelAdapterReturnType<Steps extends NonEmptyArray<string>> = [
+	((props: RouteFunnelProps<Steps>) => JSX.Element) & {
+		Step: (props: Omit<StepProps<Steps>, "pubsub">) => JSX.Element;
+		Guard: (props: Omit<GuardProps, "pubsub">) => JSX.Element;
+	},
+	{
+		funnelId: string;
+		step: Steps[number];
+		pubsub: FunnelPubsub;
+		onStepChange: FunnelStepChangeFunction;
+	},
+];
