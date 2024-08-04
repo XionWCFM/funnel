@@ -2,6 +2,7 @@ import { FunnelPubsub } from "./external/funnel-pubsub";
 import { funnelQs } from "./external/query-string";
 import {
 	FUNNEL_RESTRICT_EVENT,
+	type FunnelAdapterReturnType,
 	type FunnelEvent,
 	type FunnelProps,
 	type FunnelStepChangeFunction,
@@ -21,9 +22,10 @@ export type {
 	RoutesEventType,
 	FunnelStepChangeFunction,
 	RouteFunnelProps,
-	UseFunnelOptions as FlowOptions,
+	UseFunnelOptions,
 	FunnelEvent,
 	FunnelProps,
 	StepProps,
 	GuardProps,
+	FunnelAdapterReturnType,
 };
