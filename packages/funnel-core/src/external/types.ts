@@ -5,8 +5,8 @@ export type NonEmptyArray<T> = readonly [T, ...T[]];
 
 export type RoutesEventType = "replace" | "push" | "back";
 
-export type FunnelStepChangeFunction = (
-	step: string,
+export type FunnelStepChangeFunction<T extends NonEmptyArray<string>> = (
+	step: T[number],
 	options?: { type?: RoutesEventType; deleteQueryParams?: string[] | string },
 ) => void;
 
@@ -24,7 +24,7 @@ export type FunnelEvent = typeof FUNNEL_RESTRICT_EVENT;
 
 export interface FunnelProps<Steps extends NonEmptyArray<string>> {
 	steps: Steps;
-	step: Steps[number];
+	step: Steps[number] | undefined;
 	children: Array<React.ReactElement<StepProps<Steps>>> | React.ReactElement<StepProps<Steps>>;
 }
 
@@ -49,8 +49,8 @@ export type FunnelAdapterReturnType<Steps extends NonEmptyArray<string>> = [
 	},
 	{
 		funnelId: string;
-		step: Steps[number];
+		step: Steps[number] | undefined;
 		pubsub: FunnelPubsub;
-		onStepChange: FunnelStepChangeFunction;
+		onStepChange: FunnelStepChangeFunction<Steps>;
 	},
 ];

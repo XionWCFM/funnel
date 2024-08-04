@@ -43,10 +43,18 @@ const stringifyQueryParams = (params: UrlParams): string => {
 	return qs.stringify(params, { addQueryPrefix: true });
 };
 
+const createQueryParamsResult = (param: UrlParams, deleteKey?: string[]): string => {
+	const currentQueryParam = getCurrentQueryParams();
+	const updateQueryParam = updateQueryParams(currentQueryParam, param);
+	const deleteQueryParam = deleteQueryParams(updateQueryParam, deleteKey ?? []);
+	return stringifyQueryParams(deleteQueryParam);
+};
+
 export const funnelQs = {
 	getOriginAndPathname,
 	getCurrentQueryParams,
 	updateQueryParams,
 	deleteQueryParams,
 	stringifyQueryParams,
+	createQueryParamsResult,
 };

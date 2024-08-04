@@ -9,14 +9,14 @@ import { useRouter, useSearchParams } from "next/navigation";
 
 export const useFunnelAppRouterAdapter = <Steps extends NonEmptyArray<string>>(
 	steps: Steps,
-	options: UseFunnelOptions<Steps>,
+	options?: Omit<UseFunnelOptions<Steps>, "step">,
 ): FunnelAdapterReturnType<Steps> => {
 	const DEFAULT_FUNNEL_ID = "default-funnel-id";
 	const funnelId = options?.funnelId ?? DEFAULT_FUNNEL_ID;
 	const router = useRouter();
 
 	const queryStep = useSearchParams().get(funnelId);
-	const step = (queryStep ?? steps[0]) as Steps[number];
+	const step = queryStep;
 
 	const [Funnel, controller] = useCoreFunnel(steps, {
 		funnelId,
@@ -29,13 +29,10 @@ export const useFunnelAppRouterAdapter = <Steps extends NonEmptyArray<string>>(
 		const deleteKeyList = Array.isArray(options?.deleteQueryParams)
 			? options?.deleteQueryParams
 			: ([options?.deleteQueryParams].filter(Boolean) as string[]);
-		const currentQueryParams = funnelQs.getCurrentQueryParams();
-		const updateQueryParams = funnelQs.updateQueryParams(currentQueryParams, {
-			[funnelId]: newStep,
-		});
-		const deleteQueryparams = funnelQs.deleteQueryParams(updateQueryParams, deleteKeyList);
-		const stringify = funnelQs.stringifyQueryParams(deleteQueryparams);
-		const newUrl = `${funnelQs.getOriginAndPathname()}${stringify}`;
+
+		const value = funnelQs.createQueryParamsResult({ [funnelId]: newStep }, deleteKeyList);
+
+		const newUrl = `${funnelQs.getOriginAndPathname()}${value}`;
 
 		if (options?.type === "replace") {
 			return router.replace(newUrl);

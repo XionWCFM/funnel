@@ -1,3 +1,4 @@
+"use client";
 import { Children, isValidElement } from "react";
 import type { FunnelProps, NonEmptyArray, StepProps } from "./types";
 
