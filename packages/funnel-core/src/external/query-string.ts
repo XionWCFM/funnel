@@ -16,32 +16,31 @@ const getCurrentQueryParams = (): UrlParams => {
 	return qs.parse(search, { ignoreQueryPrefix: true }) as UrlParams;
 };
 
-const updateQueryParams = (params: UrlParams): string => {
-	if (typeof window === "undefined") return "";
-
-	const currentParams = getCurrentQueryParams();
+const updateQueryParams = (urlParams: UrlParams, params: UrlParams): UrlParams => {
+	const currentParams = { ...urlParams };
 
 	// biome-ignore lint/complexity/noForEach: <explanation>
 	Object.keys(params).forEach((key) => {
 		currentParams[key] = params[key];
 	});
 
-	const newQueryString = qs.stringify(currentParams, { addQueryPrefix: true });
-	return newQueryString;
+	return currentParams;
 };
-// 특정 쿼리스트링을 삭제하는 함수
-const deleteQueryParams = (keys: string[]): string => {
-	if (typeof window === "undefined") return "";
 
-	const currentParams = getCurrentQueryParams();
+// 특정 쿼리스트링을 삭제하는 함수
+const deleteQueryParams = (urlParams: UrlParams, keys: string[]): UrlParams => {
+	const currentParams = { ...urlParams };
 
 	// biome-ignore lint/complexity/noForEach: <explanation>
 	keys.forEach((key) => {
 		delete currentParams[key];
 	});
 
-	const newQueryString = qs.stringify(currentParams, { addQueryPrefix: true });
-	return newQueryString;
+	return currentParams;
+};
+
+const stringifyQueryParams = (params: UrlParams): string => {
+	return qs.stringify(params, { addQueryPrefix: true });
 };
 
 export const funnelQs = {
@@ -49,4 +48,5 @@ export const funnelQs = {
 	getCurrentQueryParams,
 	updateQueryParams,
 	deleteQueryParams,
+	stringifyQueryParams,
 };

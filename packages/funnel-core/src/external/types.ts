@@ -3,9 +3,12 @@ import type { FunnelPubsub } from "./funnel-pubsub";
 
 export type NonEmptyArray<T> = readonly [T, ...T[]];
 
-export type RoutesEventType = "replace" | "push" | "pop";
+export type RoutesEventType = "replace" | "push" | "back";
 
-export type FunnelStepChangeFunction = (step: string, options?: RoutesEventType) => void;
+export type FunnelStepChangeFunction = (
+	step: string,
+	options?: { type?: RoutesEventType; deleteQueryParams?: string[] | string },
+) => void;
 
 export type RouteFunnelProps<Steps extends NonEmptyArray<string>> = Omit<FunnelProps<Steps>, "steps" | "step">;
 
