@@ -1,0 +1,24 @@
+{
+	"name": "@xionwcfm/funnel-core",
+	"version": "0.0.0",
+	"private": true,
+	"license": "MIT",
+	"scripts": {
+		"build": "tsup"
+	},
+	"publishConfig": {
+		"access": "public"
+	},
+	"devDependencies": {
+		"@types/qs": "^6.9.15",
+		"@types/react": "^18",
+		"qs": "^6.13.0",
+		"tsup": "^8.1.0",
+		"typescript": "latest"
+	},
+	"peerDependencies": {
+		"react": "^16",
+		"react-dom": "^16",
+		"qs": "^6"
+	}
+}
