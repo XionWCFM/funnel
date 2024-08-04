@@ -16,7 +16,6 @@ export type UseFunnelOptions<T extends NonEmptyArray<string>> = {
   step?: T[number];
   initialStep?: T[number];
   funnelId?: string;
-  pubsub?: FunnelPubsub;
 };
 
 export const FUNNEL_RESTRICT_EVENT = "FUNNEL_RESTRICT_EVENT" as const;
@@ -31,21 +30,19 @@ export interface FunnelProps<Steps extends NonEmptyArray<string>> {
 export interface StepProps<Steps extends NonEmptyArray<string>> {
   name: Steps[number];
   children: React.ReactNode;
-  pubsub?: FunnelPubsub;
-  onFunnelRestrictEvent?: () => void;
 }
 
 export interface GuardProps {
-  pubsub: FunnelPubsub;
   condition: boolean | (() => boolean | Promise<boolean>);
   children?: ReactNode;
+  onFunnelRestrictEvent?: () => void;
   fallback?: ReactNode;
 }
 
 export type FunnelAdapterReturnType<Steps extends NonEmptyArray<string>> = [
   ((props: RouteFunnelProps<Steps>) => JSX.Element) & {
-    Step: (props: Omit<StepProps<Steps>, "pubsub">) => JSX.Element;
-    Guard: (props: Omit<GuardProps, "pubsub">) => JSX.Element;
+    Step: (props: StepProps<Steps>) => JSX.Element;
+    Guard: (props: GuardProps) => JSX.Element;
   },
   {
     funnelId: string;

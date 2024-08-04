@@ -1,7 +1,6 @@
-import { useMemo, useState } from "react";
+import { useMemo } from "react";
 import { useDraft } from "../internal/use-draft";
 import { Funnel } from "./funnel";
-import { FunnelPubsub } from "./funnel-pubsub";
 import { Guard } from "./guard";
 import { Step } from "./step";
 import type { GuardProps, NonEmptyArray, RouteFunnelProps, StepProps, UseFunnelOptions } from "./types";
@@ -9,10 +8,8 @@ import type { GuardProps, NonEmptyArray, RouteFunnelProps, StepProps, UseFunnelO
 export const useCoreFunnel = <Steps extends NonEmptyArray<string>>(steps: Steps, options?: UseFunnelOptions<Steps>) => {
   const initialState = options?.initialStep ?? steps[0];
   const [_step, _setStep] = useDraft(initialState);
-  const [_pubsub] = useState(() => new FunnelPubsub());
   const step = options?.step;
   const funnelId = options?.funnelId ?? "step";
-  const pubsub = options?.pubsub ?? _pubsub;
   const _onStepChange = (param: Steps[number]) => {
     _setStep(param);
   };
@@ -24,14 +21,14 @@ export const useCoreFunnel = <Steps extends NonEmptyArray<string>>(steps: Steps,
       },
       {
         Step: (props: Omit<StepProps<Steps>, "pubsub">) => {
-          return <Step pubsub={pubsub} {...props} />;
+          return <Step {...props} />;
         },
         Guard: (props: Omit<GuardProps, "pubsub">) => {
-          return <Guard pubsub={pubsub} {...props} />;
+          return <Guard {...props} />;
         },
       },
     );
-  }, [step, steps, pubsub]);
+  }, [step, steps]);
 
-  return [FunnelComponent, { funnelId, step, pubsub, onStepChange: _onStepChange }] as const;
+  return [FunnelComponent, { funnelId, step, onStepChange: _onStepChange }] as const;
 };

@@ -3,55 +3,80 @@
 import { useFunnel } from "@xionhub/funnel-app-router-adapter";
 import { useEffect } from "react";
 
+const EXAMPLE_FUNNEL_ID = "hello-this-is-funnel-id";
 export default function ExampleFunnel() {
-  const [Funnel, controller] = useFunnel(["a", "b", "c"] as const);
+  const [Funnel, controller] = useFunnel(["a", "b", "c"] as const, {
+    funnelId: EXAMPLE_FUNNEL_ID,
+  });
+
   // biome-ignore lint/correctness/useExhaustiveDependencies: <explanation>
   useEffect(() => {
-    if (!controller.step) {
-      controller.onStepChange("a", { type: "replace" });
-    }
+    controller.onStepChange("a");
   }, []);
   return (
-    <>
+    <div className=" px-4 py-4">
       <Funnel>
         <Funnel.Step name={"a"}>
-          <div className="">
-            <div className="">current A</div>
-            <button type="button" onClick={() => controller.onStepChange("b")}>
-              next B
-            </button>
-          </div>
+          <FunnelA nextStep={() => controller.onStepChange("b")} />
         </Funnel.Step>
-        <Funnel.Step
-          onFunnelRestrictEvent={() => {
-            controller.onStepChange("a", { type: "replace" });
-          }}
-          name={"b"}
-        >
+
+        <Funnel.Step name={"b"}>
           <Funnel.Guard
             condition={async () => {
               await new Promise((res) => setTimeout(res, 1000));
               return false;
             }}
+            onFunnelRestrictEvent={() => {
+              controller.onStepChange("a", { type: "replace" });
+            }}
             fallback={<div>hello world</div>}
           >
-            <div className="">
-              <div className="">current B</div>
-              <button type="button" onClick={() => controller.onStepChange("c")}>
-                next C
-              </button>
-            </div>
+            <FunnelB nextStep={() => controller.onStepChange("c")} />
           </Funnel.Guard>
         </Funnel.Step>
+
         <Funnel.Step name={"c"}>
-          <div className="">
-            <div className="">current C</div>
-            <button type="button" onClick={() => controller.onStepChange("a")}>
-              next A
-            </button>
-          </div>
+          <FunnelC nextStep={() => controller.onStepChange("a")} />
         </Funnel.Step>
       </Funnel>
-    </>
+    </div>
   );
 }
+
+type FunnelProps = {
+  nextStep: () => void;
+};
+
+const FunnelA = (props: FunnelProps) => {
+  const { nextStep } = props;
+  return (
+    <div>
+      <div>current A</div>
+      <button type="button" onClick={nextStep}>
+        next button
+      </button>
+    </div>
+  );
+};
+const FunnelB = (props: FunnelProps) => {
+  const { nextStep } = props;
+  return (
+    <div>
+      <div>current B</div>
+      <button type="button" onClick={nextStep}>
+        next button
+      </button>
+    </div>
+  );
+};
+const FunnelC = (props: FunnelProps) => {
+  const { nextStep } = props;
+  return (
+    <div>
+      <div>current C</div>
+      <button type="button" onClick={nextStep}>
+        next button
+      </button>
+    </div>
+  );
+};
