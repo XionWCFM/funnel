@@ -1,30 +1,25 @@
-# pre-push:
-#   commands:
-#     packages-audit:
-#       tags: frontend security
-#       run: yarn audit
-#     gems-audit:
-#       tags: backend security
-#       run: bundle audit
+pre-push:
+  parallel: true
+  commands:
+    lint:
+      run: pnpm run lint:biome
+      stage_fixed: true
+    check:
+      run: pnpm run check:biome
+      stage_fixed: true
+    format:
+      run: pnpm run format:biome
+      stage_fixed: true
 
-# pre-commit:
-#   parallel: true
-#   commands:
-#     eslint:
-#       glob: "*.{js,ts,jsx,tsx}"
-#       run: yarn eslint {staged_files}
-#     rubocop:
-#       tags: backend style
-#       glob: "*.rb"
-#       exclude: '(^|/)(application|routes)\.rb$'
-#       run: bundle exec rubocop --force-exclusion {all_files}
-#     govet:
-#       tags: backend style
-#       files: git ls-files -m
-#       glob: "*.go"
-#       run: go vet {files}
-#   scripts:
-#     "hello.js":
-#       runner: node
-#     "any.go":
-#       runner: go run
+pre-commit:
+  parallel: true
+  commands:
+    lint:
+      run: pnpm run lint:biome
+      stage_fixed: true
+    check:
+      run: pnpm run check:biome
+      stage_fixed: true
+    format:
+      run: pnpm run format:biome
+      stage_fixed: true
