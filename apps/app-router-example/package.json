@@ -9,12 +9,13 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "@xionhub/funnel-app-router-adapter": "workspace:*",
+    "@xionhub/funnel-core": "workspace:*",
     "next": "14.2.5",
+    "overlay-kit": "^1.4.1",
     "qs": "^6.13.0",
     "react": "^18",
-    "react-dom": "^18",
-    "@xionhub/funnel-core": "workspace:*",
-    "@xionhub/funnel-app-router-adapter": "workspace:*"
+    "react-dom": "^18"
   },
   "devDependencies": {
     "@types/node": "^20",

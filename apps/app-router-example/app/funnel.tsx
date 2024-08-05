@@ -13,6 +13,7 @@ export default function ExampleFunnel() {
   useEffect(() => {
     controller.onStepChange("a");
   }, []);
+
   return (
     <div className=" px-4 py-4">
       <Funnel>
@@ -23,13 +24,16 @@ export default function ExampleFunnel() {
         <Funnel.Step name={"b"}>
           <Funnel.Guard
             condition={async () => {
+              if (Math.random() > 0.5) {
+                return true;
+              }
               await new Promise((res) => setTimeout(res, 1000));
               return false;
             }}
             onFunnelRestrictEvent={() => {
               controller.onStepChange("a", { type: "replace" });
             }}
-            fallback={<div>hello world</div>}
+            fallback={<div>fallback..</div>}
           >
             <FunnelB nextStep={() => controller.onStepChange("c")} />
           </Funnel.Guard>

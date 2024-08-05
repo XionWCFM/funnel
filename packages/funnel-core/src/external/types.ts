@@ -47,7 +47,6 @@ export type FunnelAdapterReturnType<Steps extends NonEmptyArray<string>> = [
   {
     funnelId: string;
     step: Steps[number] | undefined;
-    pubsub: FunnelPubsub;
     onStepChange: FunnelStepChangeFunction<Steps>;
   },
 ];

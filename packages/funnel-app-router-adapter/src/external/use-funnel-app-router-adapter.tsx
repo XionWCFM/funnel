@@ -22,7 +22,6 @@ export const useFunnelAppRouterAdapter = <Steps extends NonEmptyArray<string>>(
     funnelId,
     step,
     initialStep: options?.initialStep,
-    pubsub: options?.pubsub,
   } as UseFunnelOptions<Steps>);
 
   const onStepChange: FunnelAdapterReturnType<Steps>["1"]["onStepChange"] = (newStep, options) => {

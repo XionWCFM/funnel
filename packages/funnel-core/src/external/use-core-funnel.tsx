@@ -20,10 +20,10 @@ export const useCoreFunnel = <Steps extends NonEmptyArray<string>>(steps: Steps,
         return <Funnel<Steps> step={step} steps={steps} {...props} />;
       },
       {
-        Step: (props: Omit<StepProps<Steps>, "pubsub">) => {
+        Step: (props: StepProps<Steps>) => {
           return <Step {...props} />;
         },
-        Guard: (props: Omit<GuardProps, "pubsub">) => {
+        Guard: (props: GuardProps) => {
           return <Guard {...props} />;
         },
       },

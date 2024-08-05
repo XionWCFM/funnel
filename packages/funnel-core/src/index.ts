@@ -1,4 +1,5 @@
 import { FunnelPubsub } from "./external/funnel-pubsub";
+import { Guard as FunnelGuard } from "./external/guard";
 import { funnelQs } from "./external/query-string";
 import {
   FUNNEL_RESTRICT_EVENT,
@@ -15,7 +16,7 @@ import {
 } from "./external/types";
 import { useCoreFunnel } from "./external/use-core-funnel";
 
-export { useCoreFunnel, FUNNEL_RESTRICT_EVENT, FunnelPubsub, funnelQs };
+export { useCoreFunnel, FUNNEL_RESTRICT_EVENT, FunnelPubsub, funnelQs, FunnelGuard };
 
 export type {
   NonEmptyArray,
