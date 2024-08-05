@@ -1,6 +1,7 @@
 "use client";
 
 import { useFunnel } from "@xionhub/funnel-app-router-adapter";
+import { overlay } from "overlay-kit";
 import { useEffect } from "react";
 
 const EXAMPLE_FUNNEL_ID = "hello-this-is-funnel-id";
@@ -30,7 +31,20 @@ export default function ExampleFunnel() {
               await new Promise((res) => setTimeout(res, 1000));
               return false;
             }}
-            onFunnelRestrictEvent={() => {
+            onFunnelRestrictEvent={async () => {
+              await overlay.openAsync(({ close, unmount }) => (
+                <div>
+                  <div>접근할 수 없는 상태에요</div>
+                  <button
+                    type="button"
+                    onClick={() => {
+                      close(true);
+                    }}
+                  >
+                    처음 화면으로 돌아가기
+                  </button>
+                </div>
+              ));
               controller.onStepChange("a", { type: "replace" });
             }}
             fallback={<div>fallback..</div>}
