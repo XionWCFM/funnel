@@ -1,8 +1,7 @@
-import { DEFAULT_FUNNEL_STEP_ID } from "./external/constant";
 import { FunnelClient, funnelOptions } from "./external/external-utils";
 import { Guard as FunnelGuard } from "./external/guard";
-import { funnelQs } from "./external/query-string";
 import type {
+  CreateFunnelStepFunction,
   FunnelAdapterReturnType,
   FunnelOptions,
   FunnelProps,
@@ -15,7 +14,7 @@ import type {
 } from "./external/types";
 import { useCoreFunnel } from "./external/use-core-funnel";
 
-export { useCoreFunnel, FunnelGuard, funnelQs, funnelOptions, FunnelClient, DEFAULT_FUNNEL_STEP_ID };
+export { useCoreFunnel, FunnelGuard, funnelOptions, FunnelClient };
 
 export type {
   NonEmptyArray,
@@ -27,4 +26,5 @@ export type {
   GuardProps,
   FunnelAdapterReturnType,
   FunnelOptions,
+  CreateFunnelStepFunction,
 };

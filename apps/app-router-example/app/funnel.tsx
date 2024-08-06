@@ -1,23 +1,11 @@
 "use client";
 
 import { useFunnel } from "@xionhub/funnel-app-router-adapter";
-import { funnelOptions } from "@xionhub/funnel-core";
 import { overlay } from "overlay-kit";
-import { useEffect } from "react";
-
-const EXAMPLE_FUNNEL_ID = "hello-this-is-funnel-id";
-const exampleFunnelOptions = funnelOptions({
-  steps: ["a", "b", "c"],
-  funnelId: EXAMPLE_FUNNEL_ID,
-});
+import { exampleFunnelOptions } from "~/src/example-funnel";
 
 export default function ExampleFunnel() {
-  const [Funnel, controller] = useFunnel(exampleFunnelOptions);
-
-  // biome-ignore lint/correctness/useExhaustiveDependencies: <explanation>
-  useEffect(() => {
-    controller.onStepChange("a");
-  }, []);
+  const [Funnel, controller] = useFunnel(exampleFunnelOptions());
 
   return (
     <div className=" px-4 py-4">
@@ -35,7 +23,7 @@ export default function ExampleFunnel() {
               await new Promise((res) => setTimeout(res, 1000));
               return false;
             }}
-            onFunnelRestrictEvent={async () => {
+            onRestrict={async () => {
               await overlay.openAsync(({ close, unmount }) => (
                 <div>
                   <div>접근할 수 없는 상태에요</div>
@@ -43,6 +31,7 @@ export default function ExampleFunnel() {
                     type="button"
                     onClick={() => {
                       close(true);
+                      unmount();
                     }}
                   >
                     처음 화면으로 돌아가기
