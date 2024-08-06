@@ -1,31 +1,43 @@
 import {
-  DEFAULT_FUNNEL_STEP_ID,
+  type CreateFunnelStepFunction,
   type FunnelAdapterReturnType,
+  FunnelClient,
   type FunnelOptions,
+  type FunnelStepChangeFunction,
   type NonEmptyArray,
-  funnelQs,
   useCoreFunnel,
 } from "@xionhub/funnel-core";
-import { useRouter, useSearchParams } from "next/navigation";
+import { usePathname, useRouter, useSearchParams } from "next/navigation";
 
 export const useFunnelAppRouterAdapter = <Steps extends NonEmptyArray<string>>(
   options: Omit<FunnelOptions<Steps>, "step">,
 ): FunnelAdapterReturnType<Steps> => {
-  const funnelId = options?.funnelId ?? DEFAULT_FUNNEL_STEP_ID;
+  const funnelId = options.funnelId;
   const router = useRouter();
-
-  const queryStep = useSearchParams().get(funnelId);
+  const searchParams = useSearchParams();
+  const queryStep = searchParams.get(funnelId);
+  const funnelClient = new FunnelClient(options);
+  const pathname = usePathname();
   const step = (queryStep ?? undefined) as Steps[number] | undefined;
   const [Funnel, controller] = useCoreFunnel({ ...options, step });
 
-  const onStepChange: FunnelAdapterReturnType<Steps>["1"]["onStepChange"] = (newStep, options) => {
+  const createFunnelStep: CreateFunnelStepFunction<Steps> = (step, options) => {
+    if (!options?.searchParams) {
+      return { [funnelId]: step };
+    }
+    const allQueryString = funnelClient.getQueryString(options?.searchParams);
+
     const deleteKeyList = Array.isArray(options?.deleteQueryParams)
       ? options?.deleteQueryParams
       : ([options?.deleteQueryParams].filter(Boolean) as string[]);
 
-    const value = funnelQs.updateFunnelQs({ [funnelId]: newStep }, deleteKeyList);
+    const stepObject = funnelClient.createStep(step, funnelClient.deleteStep(allQueryString, deleteKeyList));
+    return stepObject;
+  };
 
-    const newUrl = `${funnelQs.getPathName()}${value}`;
+  const onStepChange: FunnelStepChangeFunction<Steps> = (newStep, options) => {
+    const stepObject = createFunnelStep(newStep, { ...options, searchParams });
+    const newUrl = `${pathname}${funnelClient.stringifyStep(stepObject)}`;
 
     if (options?.type === "replace") {
       return router.replace(newUrl);
@@ -38,5 +50,5 @@ export const useFunnelAppRouterAdapter = <Steps extends NonEmptyArray<string>>(
     return router.push(newUrl);
   };
 
-  return [Funnel, { ...controller, onStepChange }] as const;
+  return [Funnel, { ...controller, onStepChange, createFunnelStep }] as const;
 };

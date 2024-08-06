@@ -35,7 +35,7 @@ export default function ExampleFunnel() {
               await new Promise((res) => setTimeout(res, 1000));
               return false;
             }}
-            onFunnelRestrictEvent={async () => {
+            onRestrict={async () => {
               await overlay.openAsync(({ close, unmount }) => (
                 <div>
                   <div>접근할 수 없는 상태에요</div>

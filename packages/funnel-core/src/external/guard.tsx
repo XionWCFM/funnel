@@ -2,7 +2,7 @@
 import { useEffect, useRef, useState } from "react";
 import type { GuardProps } from "./types";
 
-export const Guard = ({ condition, children, fallback, onFunnelRestrictEvent }: GuardProps) => {
+export const Guard = ({ condition, children, fallback, onRestrict: onFunnelRestrictEvent }: GuardProps) => {
   const [isRender, setIsRender] = useState(false);
   const isOnce = useRef(true);
   const canImmediateRender =

@@ -1,20 +1,30 @@
 import { useMemo } from "react";
 import { useDraft } from "../internal/use-draft";
-import { DEFAULT_FUNNEL_STEP_ID } from "./constant";
 import { Funnel } from "./funnel";
 import { Guard } from "./guard";
 import { Step } from "./step";
-import type { FunnelOptions, GuardProps, NonEmptyArray, RouteFunnelProps, StepProps } from "./types";
+import type {
+  FunnelOptions,
+  FunnelStepChangeFunction,
+  GuardProps,
+  NonEmptyArray,
+  RouteFunnelProps,
+  StepProps,
+} from "./types";
 
-export const useCoreFunnel = <Steps extends NonEmptyArray<string>>(options: FunnelOptions<Steps>) => {
-  const [_step, _setStep] = useDraft(options?.step ?? options?.steps[0]);
+export const useCoreFunnel = <Steps extends NonEmptyArray<string>>(
+  options: FunnelOptions<Steps> & { onStepChange?: FunnelStepChangeFunction<Steps> },
+) => {
+  const [_step, _setStep] = useDraft<Steps[number] | undefined>(options?.step);
   const steps = options.steps;
   const step = options?.step;
-  const funnelId = options?.funnelId ?? DEFAULT_FUNNEL_STEP_ID;
+  const funnelId = options?.funnelId;
 
-  const _onStepChange = (param: Steps[number]) => {
+  const _onStepChange: FunnelStepChangeFunction<Steps> = (param: Steps[number], routeOptions) => {
     _setStep(param);
   };
+
+  const onStepChange = options?.onStepChange ?? _onStepChange;
 
   const FunnelComponent = useMemo(() => {
     return Object.assign(
@@ -32,5 +42,5 @@ export const useCoreFunnel = <Steps extends NonEmptyArray<string>>(options: Funn
     );
   }, [step, steps]);
 
-  return [FunnelComponent, { funnelId, step, onStepChange: _onStepChange }] as const;
+  return [FunnelComponent, { funnelId, step, onStepChange }] as const;
 };
