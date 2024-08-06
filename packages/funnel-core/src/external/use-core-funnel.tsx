@@ -1,4 +1,4 @@
-import { useMemo } from "react";
+import { useEffect, useMemo } from "react";
 import { useDraft } from "../internal/use-draft";
 import { Funnel } from "./funnel";
 import { Guard } from "./guard";

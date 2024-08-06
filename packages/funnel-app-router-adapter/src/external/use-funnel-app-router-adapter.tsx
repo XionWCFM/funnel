@@ -1,6 +1,5 @@
 import {
   type CreateFunnelStepFunction,
-  type FunnelAdapterReturnType,
   FunnelClient,
   type FunnelOptions,
   type FunnelStepChangeFunction,
@@ -11,7 +10,7 @@ import { usePathname, useRouter, useSearchParams } from "next/navigation";
 
 export const useFunnelAppRouterAdapter = <Steps extends NonEmptyArray<string>>(
   options: Omit<FunnelOptions<Steps>, "step">,
-): FunnelAdapterReturnType<Steps> => {
+) => {
   const funnelId = options.funnelId;
   const router = useRouter();
   const searchParams = useSearchParams();
@@ -31,7 +30,7 @@ export const useFunnelAppRouterAdapter = <Steps extends NonEmptyArray<string>>(
       ? options?.deleteQueryParams
       : ([options?.deleteQueryParams].filter(Boolean) as string[]);
 
-    const stepObject = funnelClient.createStep(step, funnelClient.deleteStep(allQueryString, deleteKeyList));
+    const stepObject = funnelClient.createStepObject(step, funnelClient.deleteStep(allQueryString, deleteKeyList));
     return stepObject;
   };
 

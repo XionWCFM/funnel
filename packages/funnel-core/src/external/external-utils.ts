@@ -12,6 +12,10 @@ export class FunnelClient<T extends NonEmptyArray<string>> {
     this.steps = props.steps;
   }
 
+  createStep(value: T[number], context?: Record<string, unknown>) {
+    return this.stringifyStep(this.createStepObject(value, context));
+  }
+
   getQueryString<T extends Record<string, unknown>>(searchParams: URLSearchParams) {
     const result = {} as Record<string, unknown>;
     searchParams.forEach((value, key) => {
@@ -20,7 +24,7 @@ export class FunnelClient<T extends NonEmptyArray<string>> {
     return result as T;
   }
 
-  createStep(value: T[number], context?: Record<string, unknown>) {
+  createStepObject(value: T[number], context?: Record<string, unknown>) {
     return { ...context, [this.funnelId]: value } as const;
   }
 

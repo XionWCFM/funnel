@@ -1,12 +1,13 @@
-import { Suspense } from "react";
-import ExampleFunnel from "./funnel";
+"use client";
+import { FunnelClient } from "@xionhub/funnel-core";
+import Link from "next/link";
+import { exampleFunnelOptions } from "~/src/example-funnel";
 
 export default function Home() {
+  const funnelClient = new FunnelClient(exampleFunnelOptions());
   return (
     <div>
-      <Suspense>
-        <ExampleFunnel />
-      </Suspense>
+      <Link href={`/funnel${funnelClient.createStep("a")}`}>퍼널로 이동하기</Link>
     </div>
   );
 }
