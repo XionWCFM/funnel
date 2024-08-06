@@ -2,7 +2,7 @@
 import { useEffect, useRef, useState } from "react";
 import type { GuardProps } from "./types";
 
-export const Guard = ({ condition, children, fallback, onRestrict: onFunnelRestrictEvent }: GuardProps) => {
+export const Guard = ({ condition, children, fallback, onRestrict }: GuardProps) => {
   const [isRender, setIsRender] = useState(false);
   const isOnce = useRef(true);
   const canImmediateRender =
@@ -19,7 +19,7 @@ export const Guard = ({ condition, children, fallback, onRestrict: onFunnelRestr
       if (typeof condition === "function") {
         result = await condition();
         if (result === false) {
-          onFunnelRestrictEvent?.();
+          onRestrict?.();
         } else {
           setIsRender(true);
         }
@@ -27,7 +27,7 @@ export const Guard = ({ condition, children, fallback, onRestrict: onFunnelRestr
 
       if (typeof condition === "boolean") {
         if (condition === false) {
-          onFunnelRestrictEvent?.();
+          onRestrict?.();
         } else {
           setIsRender(true);
         }
@@ -38,7 +38,7 @@ export const Guard = ({ condition, children, fallback, onRestrict: onFunnelRestr
       check();
       isOnce.current = false;
     }
-  }, [canImmediateRender, condition, onFunnelRestrictEvent]);
+  }, [canImmediateRender, condition, onRestrict]);
 
   return canImmediateRender || isRender ? children : fallback;
 };
