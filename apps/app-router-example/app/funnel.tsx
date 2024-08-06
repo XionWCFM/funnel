@@ -1,14 +1,18 @@
 "use client";
 
 import { useFunnel } from "@xionhub/funnel-app-router-adapter";
+import { funnelOptions } from "@xionhub/funnel-core";
 import { overlay } from "overlay-kit";
 import { useEffect } from "react";
 
 const EXAMPLE_FUNNEL_ID = "hello-this-is-funnel-id";
+const exampleFunnelOptions = funnelOptions({
+  steps: ["a", "b", "c"],
+  funnelId: EXAMPLE_FUNNEL_ID,
+});
+
 export default function ExampleFunnel() {
-  const [Funnel, controller] = useFunnel(["a", "b", "c"] as const, {
-    funnelId: EXAMPLE_FUNNEL_ID,
-  });
+  const [Funnel, controller] = useFunnel(exampleFunnelOptions);
 
   // biome-ignore lint/correctness/useExhaustiveDependencies: <explanation>
   useEffect(() => {

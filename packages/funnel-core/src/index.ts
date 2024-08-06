@@ -1,32 +1,30 @@
-import { FunnelPubsub } from "./external/funnel-pubsub";
+import { DEFAULT_FUNNEL_STEP_ID } from "./external/constant";
+import { FunnelClient, funnelOptions } from "./external/external-utils";
 import { Guard as FunnelGuard } from "./external/guard";
 import { funnelQs } from "./external/query-string";
-import {
-  FUNNEL_RESTRICT_EVENT,
-  type FunnelAdapterReturnType,
-  type FunnelEvent,
-  type FunnelProps,
-  type FunnelStepChangeFunction,
-  type GuardProps,
-  type NonEmptyArray,
-  type RouteFunnelProps,
-  type RoutesEventType,
-  type StepProps,
-  type UseFunnelOptions,
+import type {
+  FunnelAdapterReturnType,
+  FunnelOptions,
+  FunnelProps,
+  FunnelStepChangeFunction,
+  GuardProps,
+  NonEmptyArray,
+  RouteFunnelProps,
+  RoutesEventType,
+  StepProps,
 } from "./external/types";
 import { useCoreFunnel } from "./external/use-core-funnel";
 
-export { useCoreFunnel, FUNNEL_RESTRICT_EVENT, FunnelPubsub, funnelQs, FunnelGuard };
+export { useCoreFunnel, FunnelGuard, funnelQs, funnelOptions, FunnelClient, DEFAULT_FUNNEL_STEP_ID };
 
 export type {
   NonEmptyArray,
   RoutesEventType,
   FunnelStepChangeFunction,
   RouteFunnelProps,
-  UseFunnelOptions,
-  FunnelEvent,
   FunnelProps,
   StepProps,
   GuardProps,
   FunnelAdapterReturnType,
+  FunnelOptions,
 };

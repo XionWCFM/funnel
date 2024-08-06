@@ -1,26 +1,28 @@
 import qs from "qs";
 
-interface UrlParams {
-  [key: string]: string | number | boolean | null | undefined;
-}
-
-const getOriginAndPathname = () => {
+const getOrigin = () => {
   if (typeof window === "undefined") return "";
-  return `${window.location.origin}${window.location.pathname}`;
+  return window.location.origin;
 };
 
-const getCurrentQueryParams = (): UrlParams => {
-  if (typeof window === "undefined") return {};
+const getPathName = () => {
+  if (typeof window === "undefined") return "";
+  return window.location.pathname;
+};
+
+const getQs = <T extends Record<string, unknown>>(): T => {
+  if (typeof window === "undefined") return {} as T;
 
   const search = window.location.search;
-  return qs.parse(search, { ignoreQueryPrefix: true }) as UrlParams;
+  return qs.parse(search, { ignoreQueryPrefix: true }) as T;
 };
 
-const updateQueryParams = (urlParams: UrlParams, params: UrlParams): UrlParams => {
+const updateQs = <T extends Record<string, unknown>>(urlParams: T, params: Partial<T>): T => {
   const currentParams = { ...urlParams };
 
   // biome-ignore lint/complexity/noForEach: <explanation>
   Object.keys(params).forEach((key) => {
+    //@ts-ignore
     currentParams[key] = params[key];
   });
 
@@ -28,7 +30,7 @@ const updateQueryParams = (urlParams: UrlParams, params: UrlParams): UrlParams =
 };
 
 // 특정 쿼리스트링을 삭제하는 함수
-const deleteQueryParams = (urlParams: UrlParams, keys: string[]): UrlParams => {
+const deleteQs = <T extends Record<string, unknown>, U extends string>(urlParams: T, keys: U[]): Omit<T, U> => {
   const currentParams = { ...urlParams };
 
   // biome-ignore lint/complexity/noForEach: <explanation>
@@ -39,22 +41,23 @@ const deleteQueryParams = (urlParams: UrlParams, keys: string[]): UrlParams => {
   return currentParams;
 };
 
-const stringifyQueryParams = (params: UrlParams): string => {
+const stringifyQs = (params: Record<string, unknown>): string => {
   return qs.stringify(params, { addQueryPrefix: true });
 };
 
-const createQueryParamsResult = (param: UrlParams, deleteKey?: string[]): string => {
-  const currentQueryParam = getCurrentQueryParams();
-  const updateQueryParam = updateQueryParams(currentQueryParam, param);
-  const deleteQueryParam = deleteQueryParams(updateQueryParam, deleteKey ?? []);
-  return stringifyQueryParams(deleteQueryParam);
+const updateFunnelQs = (param: Record<string, unknown>, deleteKey?: string[]): string => {
+  const currentQueryParam = funnelQs.getQs();
+  const updateQueryParam = funnelQs.updateQs(currentQueryParam, param);
+  const deleteQueryParam = funnelQs.deleteQs(updateQueryParam, deleteKey ?? []);
+  return funnelQs.stringifyQs(deleteQueryParam);
 };
 
 export const funnelQs = {
-  getOriginAndPathname,
-  getCurrentQueryParams,
-  updateQueryParams,
-  deleteQueryParams,
-  stringifyQueryParams,
-  createQueryParamsResult,
+  getQs,
+  updateQs,
+  deleteQs,
+  stringifyQs,
+  getOrigin,
+  getPathName,
+  updateFunnelQs,
 };

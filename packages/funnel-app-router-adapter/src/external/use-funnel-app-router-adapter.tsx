@@ -1,37 +1,31 @@
 import {
+  DEFAULT_FUNNEL_STEP_ID,
   type FunnelAdapterReturnType,
+  type FunnelOptions,
   type NonEmptyArray,
-  type UseFunnelOptions,
   funnelQs,
   useCoreFunnel,
 } from "@xionhub/funnel-core";
 import { useRouter, useSearchParams } from "next/navigation";
 
 export const useFunnelAppRouterAdapter = <Steps extends NonEmptyArray<string>>(
-  steps: Steps,
-  options?: Omit<UseFunnelOptions<Steps>, "step">,
+  options: Omit<FunnelOptions<Steps>, "step">,
 ): FunnelAdapterReturnType<Steps> => {
-  const DEFAULT_FUNNEL_ID = "default-funnel-id";
-  const funnelId = options?.funnelId ?? DEFAULT_FUNNEL_ID;
+  const funnelId = options?.funnelId ?? DEFAULT_FUNNEL_STEP_ID;
   const router = useRouter();
 
   const queryStep = useSearchParams().get(funnelId);
-  const step = queryStep;
-
-  const [Funnel, controller] = useCoreFunnel(steps, {
-    funnelId,
-    step,
-    initialStep: options?.initialStep,
-  } as UseFunnelOptions<Steps>);
+  const step = (queryStep ?? undefined) as Steps[number] | undefined;
+  const [Funnel, controller] = useCoreFunnel({ ...options, step });
 
   const onStepChange: FunnelAdapterReturnType<Steps>["1"]["onStepChange"] = (newStep, options) => {
     const deleteKeyList = Array.isArray(options?.deleteQueryParams)
       ? options?.deleteQueryParams
       : ([options?.deleteQueryParams].filter(Boolean) as string[]);
 
-    const value = funnelQs.createQueryParamsResult({ [funnelId]: newStep }, deleteKeyList);
+    const value = funnelQs.updateFunnelQs({ [funnelId]: newStep }, deleteKeyList);
 
-    const newUrl = `${funnelQs.getOriginAndPathname()}${value}`;
+    const newUrl = `${funnelQs.getPathName()}${value}`;
 
     if (options?.type === "replace") {
       return router.replace(newUrl);

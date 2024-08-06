@@ -1,5 +1,4 @@
 import type { ReactNode } from "react";
-import type { FunnelPubsub } from "./funnel-pubsub";
 
 export type NonEmptyArray<T> = readonly [T, ...T[]];
 
@@ -11,15 +10,6 @@ export type FunnelStepChangeFunction<T extends NonEmptyArray<string>> = (
 ) => void;
 
 export type RouteFunnelProps<Steps extends NonEmptyArray<string>> = Omit<FunnelProps<Steps>, "steps" | "step">;
-
-export type UseFunnelOptions<T extends NonEmptyArray<string>> = {
-  step?: T[number];
-  initialStep?: T[number];
-  funnelId?: string;
-};
-
-export const FUNNEL_RESTRICT_EVENT = "FUNNEL_RESTRICT_EVENT" as const;
-export type FunnelEvent = typeof FUNNEL_RESTRICT_EVENT;
 
 export interface FunnelProps<Steps extends NonEmptyArray<string>> {
   steps: Steps;
@@ -50,3 +40,9 @@ export type FunnelAdapterReturnType<Steps extends NonEmptyArray<string>> = [
     onStepChange: FunnelStepChangeFunction<Steps>;
   },
 ];
+
+export type FunnelOptions<T extends NonEmptyArray<string>> = {
+  steps: T;
+  step?: T[number] | undefined;
+  funnelId?: string;
+};
