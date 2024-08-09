@@ -1,4 +1,5 @@
 import type { FunnelOptions, NonEmptyArray } from "@xionhub/funnel-core";
+import type QueryString from "qs";
 import qs from "qs";
 
 export class FunnelClient<T extends NonEmptyArray<string>> {
@@ -10,8 +11,11 @@ export class FunnelClient<T extends NonEmptyArray<string>> {
     this.steps = props.steps;
   }
 
-  createStep(value: T[number], context?: Record<string, unknown>) {
-    return this.stringifyStep(this.createStepObject(value, context));
+  createStep(value: T[number], context?: Record<string, unknown>, deleteQueryParams?: string[] | string) {
+    const deleteList = (
+      Array.isArray(deleteQueryParams) ? deleteQueryParams : [deleteQueryParams].filter(Boolean)
+    ) as string[];
+    return this.stringifyStep(this.deleteStep(this.createStepObject(value, context), deleteList));
   }
 
   getQueryString<T extends Record<string, unknown>>(searchParams: URLSearchParams) {
@@ -37,11 +41,11 @@ export class FunnelClient<T extends NonEmptyArray<string>> {
     return result as Omit<T, K>;
   }
 
-  stringifyStep(context: Record<string, unknown>) {
-    return qs.stringify(context, { addQueryPrefix: true });
+  stringifyStep(context: Record<string, unknown>, options?: QueryString.IStringifyBaseOptions) {
+    return qs.stringify(context, options);
   }
 
-  parseQueryString<T>(queryString: string) {
-    return qs.parse(queryString, { ignoreQueryPrefix: true }) as T;
+  parseQueryString<T>(queryString: string, options?: QueryString.IStringifyBaseOptions) {
+    return qs.parse(queryString, options) as T;
   }
 }
