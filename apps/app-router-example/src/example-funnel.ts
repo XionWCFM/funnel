@@ -1,4 +1,4 @@
-import { FunnelClient, funnelOptions } from "@xionhub/funnel-core";
+import { funnelOptions } from "@xionhub/funnel-core";
 
 const EXAMPLE_FUNNEL_ID = "hello-this-is-funnel-id";
 export const exampleFunnelOptions = () =>

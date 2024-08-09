@@ -1,5 +1,5 @@
 {
-  "name": "@xionhub/funnel-core",
+  "name": "@xionhub/funnel-client",
   "version": "0.0.0",
   "private": true,
   "license": "MIT",
@@ -22,12 +22,17 @@
     "access": "public"
   },
   "devDependencies": {
+    "@types/qs": "^6.9.15",
     "@types/react": "^18",
+    "qs": "^6.13.0",
     "tsup": "^8.1.0",
-    "typescript": "latest"
+    "typescript": "latest",
+    "@xionhub/funnel-core": "workspace:*"
   },
   "peerDependencies": {
     "react": "^16",
-    "react-dom": "^16"
+    "react-dom": "^16",
+    "qs": "^6",
+    "@xionhub/funnel-core": "^0"
   }
 }

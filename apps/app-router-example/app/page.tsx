@@ -1,5 +1,5 @@
 "use client";
-import { FunnelClient } from "@xionhub/funnel-core";
+import { FunnelClient } from "@xionhub/funnel-client";
 import Link from "next/link";
 import { exampleFunnelOptions } from "~/src/example-funnel";
 
