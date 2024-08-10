@@ -1,11 +1,11 @@
 import { Suspense } from "react";
-import { BasicFunnel } from "~/src/basic-funnel";
+import { NestedFunnel } from "~/src/nested-funnel";
 
 export default function Page() {
   return (
     <div>
       <Suspense>
-        <BasicFunnel />
+        <NestedFunnel />
       </Suspense>
     </div>
   );

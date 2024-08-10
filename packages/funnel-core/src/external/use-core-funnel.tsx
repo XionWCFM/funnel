@@ -1,4 +1,4 @@
-import { useEffect, useMemo } from "react";
+import { useMemo } from "react";
 import { useDraft } from "../internal/use-draft";
 import { Funnel } from "./funnel";
 import { Guard } from "./guard";
@@ -16,11 +16,12 @@ export const useCoreFunnel = <Steps extends NonEmptyArray<string>>(
   options: FunnelOptions<Steps> & { onStepChange?: FunnelStepChangeFunction<Steps> },
 ) => {
   const [_step, _setStep] = useDraft<Steps[number] | undefined>(options?.step);
-  const steps = options.steps;
-  const step = options?.step;
-  const funnelId = options?.funnelId;
 
-  const _onStepChange: FunnelStepChangeFunction<Steps> = (param: Steps[number], routeOptions) => {
+  const steps = options.steps;
+  const step = options?.step ?? _step;
+  const funnelId = options.funnelId;
+
+  const _onStepChange: FunnelStepChangeFunction<Steps> = (param: Steps[number]) => {
     _setStep(param);
   };
 
@@ -35,12 +36,12 @@ export const useCoreFunnel = <Steps extends NonEmptyArray<string>>(
         Step: (props: StepProps<Steps>) => {
           return <Step {...props} />;
         },
-        Guard: (props: GuardProps) => {
+        Guard: <T,>(props: GuardProps<T>) => {
           return <Guard {...props} />;
         },
       },
     );
   }, [step, steps]);
 
-  return [FunnelComponent, { funnelId, step, onStepChange }] as const;
+  return [FunnelComponent, { funnelId, step, onStepChange, steps }] as const;
 };

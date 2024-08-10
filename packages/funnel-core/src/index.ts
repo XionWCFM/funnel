@@ -1,4 +1,4 @@
-import { FunnelClient, funnelOptions } from "./external/external-utils";
+import { funnelOptions } from "./external/external-utils";
 import { Guard as FunnelGuard } from "./external/guard";
 import type {
   CreateFunnelStepFunction,
@@ -14,7 +14,7 @@ import type {
 } from "./external/types";
 import { useCoreFunnel } from "./external/use-core-funnel";
 
-export { useCoreFunnel, FunnelGuard, funnelOptions, FunnelClient };
+export { useCoreFunnel, FunnelGuard, funnelOptions };
 
 export type {
   NonEmptyArray,

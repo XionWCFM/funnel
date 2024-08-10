@@ -4,12 +4,7 @@ export type NonEmptyArray<T> = readonly [T, ...T[]];
 
 export type RoutesEventType = "replace" | "push" | "back";
 
-export type DeleteQueryParams = { deleteQueryParams?: string[] | string };
-
-export type FunnelStepChangeFunction<T extends NonEmptyArray<string>> = (
-  step: T[number],
-  options?: { type?: RoutesEventType } & DeleteQueryParams,
-) => void;
+export type FunnelStepChangeFunction<T extends NonEmptyArray<string>> = (step: T[number]) => void;
 
 export type RouteFunnelProps<Steps extends NonEmptyArray<string>> = Omit<FunnelProps<Steps>, "steps" | "step">;
 
@@ -24,22 +19,23 @@ export interface StepProps<Steps extends NonEmptyArray<string>> {
   children: React.ReactNode;
 }
 
-export interface GuardProps {
-  condition: boolean | (() => boolean | Promise<boolean>);
+export type GuardProps<T = boolean> = {
+  condition: (() => T) | (() => Promise<T>) | boolean | (() => boolean) | (() => Promise<boolean>);
   children?: ReactNode;
-  onRestrict?: () => void;
+  onRestrict?: (param: Awaited<T>) => void;
+  conditionBy?: (param: Awaited<T>) => boolean;
   fallback?: ReactNode;
-}
+};
 
 export type CreateFunnelStepFunction<Steps extends NonEmptyArray<string>> = (
   step: Steps[number],
   options?: { deleteQueryParams?: string[] | string; searchParams?: URLSearchParams },
 ) => Record<string, unknown>;
 
-export type FunnelAdapterReturnType<Steps extends NonEmptyArray<string>> = [
+export type FunnelAdapterReturnType<Steps extends NonEmptyArray<string>, T = unknown> = [
   ((props: RouteFunnelProps<Steps>) => JSX.Element) & {
     Step: (props: StepProps<Steps>) => JSX.Element;
-    Guard: (props: GuardProps) => JSX.Element;
+    Guard: (props: GuardProps<T>) => JSX.Element;
   },
   {
     funnelId: string;
