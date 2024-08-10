@@ -83,9 +83,9 @@ type Props = {
 const FunnelItem = ({ setStep, step }: Props) => {
   return (
     <div className=" flex flex-col gap-y-16 justify-center items-center">
-      <div>현재 퍼널 위치는 {step}</div>
+      <div>current location {step}</div>
       <button className=" bg-purple-400 rounded-full py-4 px-4" onClick={() => setStep()}>
-        다음 퍼널로 가기
+        go to next funnel
       </button>
     </div>
   );

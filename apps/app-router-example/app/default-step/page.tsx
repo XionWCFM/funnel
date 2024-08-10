@@ -1,11 +1,11 @@
 import { Suspense } from "react";
-import { BasicFunnel } from "~/src/basic-funnel";
+import { DefaultStepFunnel } from "~/src/default-step-funnel";
 
 export default function Page() {
   return (
     <div>
       <Suspense>
-        <BasicFunnel />
+        <DefaultStepFunnel />
       </Suspense>
     </div>
   );

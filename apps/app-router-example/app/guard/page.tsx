@@ -1,11 +1,11 @@
 import { Suspense } from "react";
-import { BasicFunnel } from "~/src/basic-funnel";
+import { GuardFunnel } from "~/src/guard-funnel";
 
 export default function Page() {
   return (
     <div>
       <Suspense>
-        <BasicFunnel />
+        <GuardFunnel />
       </Suspense>
     </div>
   );
