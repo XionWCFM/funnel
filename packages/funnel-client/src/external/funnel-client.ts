@@ -21,6 +21,7 @@ export class FunnelClient<T extends NonEmptyArray<string>> {
     this.deleteStep = this.deleteStep.bind(this);
     this.stringifyStep = this.stringifyStep.bind(this);
     this.parseQueryString = this.parseQueryString.bind(this);
+
   }
 
   createStep(step: T[number], options?: CreateStepOptionsType) {

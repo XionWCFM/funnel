@@ -12,6 +12,7 @@
 
 **Separate declaration and use of funnels** : For flexible design, we separate the part that defines the funnel from the part that uses it.
 
+
 # Quick Start
 
 ## next.js app router
