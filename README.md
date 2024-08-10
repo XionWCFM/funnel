@@ -2,7 +2,16 @@
 
 # useFunnel
 
-Manage your funnels declaratively and explicitly.
+**Freedom From Details** : Instead of relying directly on the router, it provides instructions on where to route.
+
+**Flexible Customization** : We advocate funnel management via queryString, but you can also implement it another way via useCoreFunnel.
+
+**Nested funnel support** : Managing nested funnels is one of the biggest headaches. We offer a way to deal with this
+
+**Guard support** : Provides a way to block access by malicious users.
+
+**Separate declaration and use of funnels** : For flexible design, we separate the part that defines the funnel from the part that uses it.
+
 
 # Quick Start
 
@@ -129,6 +138,20 @@ declare const useCoreFunnel: <Steps extends NonEmptyArray<string>>(
 ];
 ```
 
+## funnelOptions
+
+```tsx
+type FunnelOptions<T extends NonEmptyArray<string>> = {
+  steps: T;
+  step?: T[number] | undefined;
+  funnelId: string;
+};
+```
+
+`funnelOptions` shares the same concept as queryOptions in tanstack query. Used to create a type-safe option object.
+
+`funnelId` is generally used as the key value of querystring.
+
 ## Guard
 
 ```tsx
@@ -148,6 +171,24 @@ interface GuardProps<T> {
 `conditionBy` is required if the value returned by condition is not boolean. It should return a boolean.
 
 `fallback` is the fallback that will be displayed when the condition is Falsy.
+
+simple Example
+
+```tsx
+ <Funnel.Guard
+    condition={Math.random() > 0.5}
+    onRestrict=() => {
+      router.replace('/home')
+    }}
+  >
+    <FunnelItem
+      setStep={() => {
+        router.push(`/guard?${controller.createStep("c")}`);
+      }}
+      step="b"
+    />
+  </Funnel.Guard>
+```
 
 ## useFunnel For App Router
 
@@ -185,10 +226,95 @@ createStep(step:string , options:{
     searchParams?: URLSearchParams;
     deleteQueryParams?: string[] | string;
     qsOptions?: QueryString.IStringifyBaseOptions;
-    })
+})
 ```
 
 For deleteQueryParams, enter the key value of queryParams you want to delete. qsOptions uses StringifyBaseOptions from the qs library.
+
+# Nested Funnel Example
+
+```tsx
+export const aFunnelOptions = () =>
+  funnelOptions({
+    funnelId: "sadkl",
+    steps: ["astart", "ado", "aend"] as const,
+  });
+
+export const bFunnelOptions = () =>
+  funnelOptions({
+    funnelId: "sadkl2",
+    steps: ["bstart", "bdo", "bend"] as const,
+  });
+
+export const NestedFunnel = () => {
+  const [AFunnel, aController] = useFunnel(aFunnelOptions());
+  const [BFunnel, bController] = useFunnel(bFunnelOptions());
+  const searchParams = useSearchParams();
+  const router = useRouter();
+
+  return (
+    <div className=" px-16 py-16">
+      <AFunnel>
+        <AFunnel.Step name={"astart"}>
+          <FunnelItem
+            setStep={() => {
+              router.push(`/nested?${aController.createStep("ado")}`);
+            }}
+            step={"astart"}
+          />
+        </AFunnel.Step>
+        <AFunnel.Step name={"ado"}>
+          <FunnelItem
+            setStep={() => {
+              router.push(
+                `/nested?${bController.createStep("bstart", { searchParams, deleteQueryParams: aController.funnelId })}`
+              );
+            }}
+            step={"ado"}
+          />
+        </AFunnel.Step>
+        <AFunnel.Step name={"aend"}>
+          <FunnelItem
+            setStep={() => {
+              router.push(`/nested?${aController.createStep("astart")}`);
+            }}
+            step={"aend"}
+          />
+        </AFunnel.Step>
+      </AFunnel>
+
+      <BFunnel>
+        <BFunnel.Step name={"bstart"}>
+          <FunnelItem
+            setStep={() => {
+              router.push(`/nested?${bController.createStep("bdo")}`);
+            }}
+            step={"bstart"}
+          />
+        </BFunnel.Step>
+        <BFunnel.Step name={"bdo"}>
+          <FunnelItem
+            setStep={() => {
+              router.push(`/nested?${bController.createStep("bend")}`);
+            }}
+            step={"bdo"}
+          />
+        </BFunnel.Step>
+        <BFunnel.Step name={"bend"}>
+          <FunnelItem
+            setStep={() => {
+              router.push(
+                `/nested?${aController.createStep("aend", { searchParams, deleteQueryParams: bController.funnelId })}`
+              );
+            }}
+            step={"bend"}
+          />
+        </BFunnel.Step>
+      </BFunnel>
+    </div>
+  );
+};
+```
 
 # Get More Example
 
