@@ -12,9 +12,33 @@
 
 **Separate declaration and use of funnels** : For flexible design, we separate the part that defines the funnel from the part that uses it.
 
+# Philosophy
+
+**Querystring First**
+
+In order to provide a smooth user experience through integration with the history stack, the use of query strings is inevitable.
+
+So we provide an API to better manage funnels through query strings.
+
+**Doesn't change route**
+
+Many frameworks provide routers to change paths. Supporting all of this would be very tedious. Instead we provide a query string telling us how to change the path.
+
+**Declarative**
+
+We aim for code that allows you to see at a glance how the funnel should behave.
+
 # Quick Start
 
 ## next.js app router
+
+### Requirements
+
+```
+qs : ^6
+next : ^13
+react : ^16
+```
 
 ### Installation
 
