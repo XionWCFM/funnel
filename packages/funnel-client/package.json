@@ -3,6 +3,7 @@
   "version": "0.0.1",
   "private": false,
   "license": "MIT",
+  "main": "./dist/index.js",
   "exports": {
     ".": {
       "import": {

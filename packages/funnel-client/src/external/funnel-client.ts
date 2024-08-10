@@ -15,6 +15,12 @@ export class FunnelClient<T extends NonEmptyArray<string>> {
   constructor(props: FunnelOptions<T>) {
     this.funnelId = props.funnelId;
     this.steps = props.steps;
+    this.createStep = this.createStep.bind(this);
+    this.getQueryString = this.getQueryString.bind(this);
+    this.createStepObject = this.createStepObject.bind(this);
+    this.deleteStep = this.deleteStep.bind(this);
+    this.stringifyStep = this.stringifyStep.bind(this);
+    this.parseQueryString = this.parseQueryString.bind(this);
   }
 
   createStep(step: T[number], options?: CreateStepOptionsType) {

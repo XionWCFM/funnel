@@ -1,8 +1,9 @@
 {
   "name": "@xionhub/funnel-app-router-adapter",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "private": false,
   "license": "MIT",
+  "main": "./dist/index.js",
   "exports": {
     ".": {
       "import": {
