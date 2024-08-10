@@ -12,7 +12,6 @@
 
 **Separate declaration and use of funnels** : For flexible design, we separate the part that defines the funnel from the part that uses it.
 
-
 # Quick Start
 
 ## next.js app router
@@ -155,16 +154,21 @@ type FunnelOptions<T extends NonEmptyArray<string>> = {
 ## Guard
 
 ```tsx
-interface GuardProps<T> {
-  condition: (() => T) | (() => Promise<T>);
+type GuardProps<T = boolean> = {
+  condition:
+    | (() => T)
+    | (() => Promise<T>)
+    | boolean
+    | (() => boolean)
+    | (() => Promise<boolean>);
   children?: ReactNode;
   onRestrict?: (param: Awaited<T>) => void;
   conditionBy?: (param: Awaited<T>) => boolean;
   fallback?: ReactNode;
-}
+};
 ```
 
-`condition` is a function that must return whether the funnel can be accessed.
+`condition` must be a function or boolean that returns whether the funnel is accessible.
 
 `onRestrict` runs when condition is false.
 
