@@ -11,11 +11,12 @@ export class FunnelClient<T extends NonEmptyArray<string>> {
     this.steps = props.steps;
   }
 
-  createStep(value: T[number], context?: Record<string, unknown>, deleteQueryParams?: string[] | string) {
+  createStep(value: T[number], context?: URLSearchParams, deleteQueryParams?: string[] | string) {
     const deleteList = (
       Array.isArray(deleteQueryParams) ? deleteQueryParams : [deleteQueryParams].filter(Boolean)
     ) as string[];
-    return this.stringifyStep(this.deleteStep(this.createStepObject(value, context), deleteList));
+    const searchParamToObj = this.getQueryString(context ?? new URLSearchParams());
+    return this.stringifyStep(this.deleteStep(this.createStepObject(value, searchParamToObj), deleteList));
   }
 
   getQueryString<T extends Record<string, unknown>>(searchParams: URLSearchParams) {

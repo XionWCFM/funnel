@@ -8,8 +8,8 @@ import { exampleFunnelOptions } from "~/src/example-funnel";
 export default function ExampleFunnel() {
   const [Funnel, controller] = useFunnel(exampleFunnelOptions());
   const router = useRouter();
-  const createStep = (newValue: "a" | "b" | "c") => {
-    return `/funnel${controller.funnelClient.createStep(newValue)}`;
+  const createStep = (newValue: (typeof controller.steps)[number]) => {
+    return `/funnel?${controller.funnelClient.createStep(newValue)}`;
   };
   return (
     <div className=" px-4 py-4">
