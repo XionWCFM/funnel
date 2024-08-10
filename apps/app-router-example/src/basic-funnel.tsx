@@ -3,11 +3,10 @@ import { useFunnel } from "@xionhub/funnel-app-router-adapter";
 import { funnelOptions } from "@xionhub/funnel-core";
 import { useRouter } from "next/navigation";
 
-const BASIC_FUNNEL_ID = "hello-this-is-funnel-id";
 export const basicFunnelOptions = () =>
   funnelOptions({
     steps: ["a", "b", "c"] as const,
-    funnelId: BASIC_FUNNEL_ID,
+    funnelId: "hello-this-is-funnel-id",
   });
 
 type Props = {
@@ -23,7 +22,7 @@ export const BasicFunnel = () => {
       <Funnel.Step name="a">
         <FunnelItem
           setStep={() => {
-            router.push(`/funnel?${controller.funnelClient.createStep("b")}`);
+            router.push(`/funnel?${controller.createStep("b")}`);
           }}
           step="a"
         />
@@ -31,7 +30,7 @@ export const BasicFunnel = () => {
       <Funnel.Step name="b">
         <FunnelItem
           setStep={() => {
-            router.push(`/funnel?${controller.funnelClient.createStep("c")}`);
+            router.push(`/funnel?${controller.createStep("c")}`);
           }}
           step="b"
         />
@@ -39,7 +38,7 @@ export const BasicFunnel = () => {
       <Funnel.Step name="c">
         <FunnelItem
           setStep={() => {
-            router.push(`/funnel?${controller.funnelClient.createStep("a")}`);
+            router.push(`/funnel?${controller.createStep("a")}`);
           }}
           step="c"
         />

@@ -20,7 +20,7 @@ export const DefaultStepFunnel = () => {
   const router = useRouter();
   useEffect(() => {
     if (controller.step === undefined) {
-      router.replace(`/default-step?${controller.funnelClient.createStep("a")}`);
+      router.replace(`/default-step?${controller.createStep("a")}`);
     }
   });
   return (
@@ -28,7 +28,7 @@ export const DefaultStepFunnel = () => {
       <Funnel.Step name="a">
         <FunnelItem
           setStep={() => {
-            router.push(`/default-step?${controller.funnelClient.createStep("b")}`);
+            router.push(`/default-step?${controller.createStep("b")}`);
           }}
           step="a"
         />
@@ -36,7 +36,7 @@ export const DefaultStepFunnel = () => {
       <Funnel.Step name="b">
         <FunnelItem
           setStep={() => {
-            router.push(`/default-step?${controller.funnelClient.createStep("c")}`);
+            router.push(`/default-step?${controller.createStep("c")}`);
           }}
           step="b"
         />
@@ -44,7 +44,7 @@ export const DefaultStepFunnel = () => {
       <Funnel.Step name="c">
         <FunnelItem
           setStep={() => {
-            router.push(`/default-step?${controller.funnelClient.createStep("a")}`);
+            router.push(`/default-step?${controller.createStep("a")}`);
           }}
           step="c"
         />

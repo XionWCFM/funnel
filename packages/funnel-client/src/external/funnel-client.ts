@@ -2,6 +2,12 @@ import type { FunnelOptions, NonEmptyArray } from "@xionhub/funnel-core";
 import type QueryString from "qs";
 import qs from "qs";
 
+type CreateStepOptionsType = {
+  searchParams?: URLSearchParams;
+  deleteQueryParams?: string[] | string;
+  qsOptions?: QueryString.IStringifyBaseOptions;
+};
+
 export class FunnelClient<T extends NonEmptyArray<string>> {
   funnelId: string;
   steps: T;
@@ -11,12 +17,13 @@ export class FunnelClient<T extends NonEmptyArray<string>> {
     this.steps = props.steps;
   }
 
-  createStep(value: T[number], context?: URLSearchParams, deleteQueryParams?: string[] | string) {
+  createStep(step: T[number], options?: CreateStepOptionsType) {
+    const { searchParams, deleteQueryParams, qsOptions } = options ?? {};
     const deleteList = (
       Array.isArray(deleteQueryParams) ? deleteQueryParams : [deleteQueryParams].filter(Boolean)
     ) as string[];
-    const searchParamToObj = this.getQueryString(context ?? new URLSearchParams());
-    return this.stringifyStep(this.deleteStep(this.createStepObject(value, searchParamToObj), deleteList));
+    const searchParamToObj = this.getQueryString(searchParams ?? new URLSearchParams());
+    return this.stringifyStep(this.deleteStep(this.createStepObject(step, searchParamToObj), deleteList), qsOptions);
   }
 
   getQueryString<T extends Record<string, unknown>>(searchParams: URLSearchParams) {

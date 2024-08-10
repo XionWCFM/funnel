@@ -20,7 +20,7 @@ export const NestedFunnel = () => {
         <AFunnel.Step name={"astart"}>
           <FunnelItem
             setStep={() => {
-              router.push(`/nested?${aController.funnelClient.createStep("ado")}`);
+              router.push(`/nested?${aController.createStep("ado")}`);
             }}
             step={"astart"}
           />
@@ -29,7 +29,7 @@ export const NestedFunnel = () => {
           <FunnelItem
             setStep={() => {
               router.push(
-                `/nested?${bController.funnelClient.createStep("bstart", searchParams, aController.funnelId)}`,
+                `/nested?${bController.createStep("bstart", { searchParams, deleteQueryParams: aController.funnelId })}`,
               );
             }}
             step={"ado"}
@@ -38,7 +38,7 @@ export const NestedFunnel = () => {
         <AFunnel.Step name={"aend"}>
           <FunnelItem
             setStep={() => {
-              router.push(`/nested?${aController.funnelClient.createStep("astart")}`);
+              router.push(`/nested?${aController.createStep("astart")}`);
             }}
             step={"aend"}
           />
@@ -49,7 +49,7 @@ export const NestedFunnel = () => {
         <BFunnel.Step name={"bstart"}>
           <FunnelItem
             setStep={() => {
-              router.push(`/nested?${bController.funnelClient.createStep("bdo")}`);
+              router.push(`/nested?${bController.createStep("bdo")}`);
             }}
             step={"bstart"}
           />
@@ -57,7 +57,7 @@ export const NestedFunnel = () => {
         <BFunnel.Step name={"bdo"}>
           <FunnelItem
             setStep={() => {
-              router.push(`/nested?${bController.funnelClient.createStep("bend")}`);
+              router.push(`/nested?${bController.createStep("bend")}`);
             }}
             step={"bdo"}
           />
@@ -65,7 +65,9 @@ export const NestedFunnel = () => {
         <BFunnel.Step name={"bend"}>
           <FunnelItem
             setStep={() => {
-              router.push(`/nested?${aController.funnelClient.createStep("aend", searchParams, bController.funnelId)}`);
+              router.push(
+                `/nested?${aController.createStep("aend", { searchParams, deleteQueryParams: bController.funnelId })}`,
+              );
             }}
             step={"bend"}
           />

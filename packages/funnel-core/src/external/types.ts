@@ -19,13 +19,13 @@ export interface StepProps<Steps extends NonEmptyArray<string>> {
   children: React.ReactNode;
 }
 
-export interface GuardProps<T> {
-  condition: (() => T) | (() => Promise<T>);
+export type GuardProps<T = boolean> = {
+  condition: (() => T) | (() => Promise<T>) | boolean | (() => boolean) | (() => Promise<boolean>);
   children?: ReactNode;
   onRestrict?: (param: Awaited<T>) => void;
   conditionBy?: (param: Awaited<T>) => boolean;
   fallback?: ReactNode;
-}
+};
 
 export type CreateFunnelStepFunction<Steps extends NonEmptyArray<string>> = (
   step: Steps[number],

@@ -11,5 +11,5 @@ export const useFunnelAppRouterAdapter = <Steps extends NonEmptyArray<string>>(
   const funnelClient = new FunnelClient(options);
   const step = (queryStep ?? undefined) as Steps[number] | undefined;
   const [Funnel, { onStepChange, ...controller }] = useCoreFunnel({ ...options, step });
-  return [Funnel, { ...controller, funnelClient }] as const;
+  return [Funnel, { ...controller, createStep: funnelClient.createStep }] as const;
 };

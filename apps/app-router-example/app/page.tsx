@@ -2,7 +2,6 @@
 import { FunnelClient } from "@xionhub/funnel-client";
 import Link from "next/link";
 import { basicFunnelOptions } from "~/src/basic-funnel";
-import { defaultStepFunnelOptions } from "~/src/default-step-funnel";
 import { guardFunnelOptions } from "~/src/guard-funnel";
 import { aFunnelOptions } from "~/src/nested-funnel";
 

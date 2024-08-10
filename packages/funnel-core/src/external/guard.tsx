@@ -3,7 +3,8 @@ import { useRef, useState } from "react";
 import { useIsomorphicLayoutEffect } from "../internal/use-isomorphic-layout-effect";
 import type { GuardProps } from "./types";
 
-export const Guard = <T,>({ condition, children, fallback, onRestrict, conditionBy }: GuardProps<T>) => {
+export const Guard = <T,>(props: GuardProps<T>) => {
+  const { condition, onRestrict, fallback, children } = props;
   const [isRender, setIsRender] = useState(false);
   const isOnce = useRef(true);
 
@@ -13,8 +14,8 @@ export const Guard = <T,>({ condition, children, fallback, onRestrict, condition
     }
     const callCondition = async () => {
       isOnce.current = false;
-      const result = await condition();
-      const byResult = conditionBy ? conditionBy(result) : result;
+      const result = typeof condition === "function" ? await condition() : condition;
+      const byResult = props?.conditionBy ? props?.conditionBy?.(result as Awaited<T>) : result;
       if (typeof byResult !== "boolean") {
         throw new Error("condition should be boolean");
       }
@@ -23,7 +24,7 @@ export const Guard = <T,>({ condition, children, fallback, onRestrict, condition
       }
 
       if (!byResult) {
-        onRestrict?.(result);
+        onRestrict?.(result as Awaited<T>);
       }
     };
     callCondition();
