@@ -84,9 +84,21 @@ importers:
 
   apps/pages-router-example:
     dependencies:
+      '@xionhub/funnel-client':
+        specifier: workspace:*
+        version: link:../../packages/funnel-client
+      '@xionhub/funnel-core':
+        specifier: workspace:*
+        version: link:../../packages/funnel-core
+      '@xionhub/funnel-pages-router-adapter':
+        specifier: workspace:*
+        version: link:../../packages/funnel-pages-router-adapter
       next:
         specifier: 14.2.5
         version: 14.2.5(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
+      qs:
+        specifier: ^6.13.0
+        version: 6.13.0
       react:
         specifier: ^18
         version: 18.3.1
@@ -97,6 +109,9 @@ importers:
       '@types/node':
         specifier: ^20
         version: 20.11.24
+      '@types/qs':
+        specifier: ^6.9.15
+        version: 6.9.15
       '@types/react':
         specifier: ^18
         version: 18.3.3
@@ -156,11 +171,11 @@ importers:
   packages/funnel-app-router-adapter:
     dependencies:
       react:
-        specifier: ^16
-        version: 16.14.0
+        specifier: '>=16.8.0'
+        version: 18.3.1
       react-dom:
-        specifier: ^16
-        version: 16.14.0(react@16.14.0)
+        specifier: '>=16.8.0'
+        version: 18.3.1(react@18.3.1)
     devDependencies:
       '@types/qs':
         specifier: ^6.9.15
@@ -176,7 +191,7 @@ importers:
         version: link:../funnel-core
       next:
         specifier: ^14.2.5
-        version: 14.2.5(react-dom@16.14.0(react@16.14.0))(react@16.14.0)
+        version: 14.2.5(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
       qs:
         specifier: ^6.13.0
         version: 6.13.0
@@ -190,11 +205,11 @@ importers:
   packages/funnel-client:
     dependencies:
       react:
-        specifier: ^16
-        version: 16.14.0
+        specifier: '>=16.8.0'
+        version: 18.3.1
       react-dom:
-        specifier: ^16
-        version: 16.14.0(react@16.14.0)
+        specifier: '>=16.8.0'
+        version: 18.3.1(react@18.3.1)
     devDependencies:
       '@types/qs':
         specifier: ^6.9.15
@@ -218,11 +233,11 @@ importers:
   packages/funnel-core:
     dependencies:
       react:
-        specifier: ^16
-        version: 16.14.0
+        specifier: '>=16.8.0'
+        version: 18.3.1
       react-dom:
-        specifier: ^16
-        version: 16.14.0(react@16.14.0)
+        specifier: '>=16.8.0'
+        version: 18.3.1(react@18.3.1)
     devDependencies:
       '@types/react':
         specifier: ^18
@@ -237,11 +252,11 @@ importers:
   packages/funnel-pages-router-adapter:
     dependencies:
       react:
-        specifier: ^16
-        version: 16.14.0
+        specifier: '>=16.8.0'
+        version: 18.3.1
       react-dom:
-        specifier: ^16
-        version: 16.14.0(react@16.14.0)
+        specifier: '>=16.8.0'
+        version: 18.3.1(react@18.3.1)
     devDependencies:
       '@types/qs':
         specifier: ^6.9.15
@@ -257,7 +272,7 @@ importers:
         version: link:../funnel-core
       next:
         specifier: ^14.2.5
-        version: 14.2.5(react-dom@16.14.0(react@16.14.0))(react@16.14.0)
+        version: 14.2.5(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
       qs:
         specifier: ^6.13.0
         version: 6.13.0
@@ -4999,31 +5014,6 @@ snapshots:
 
   natural-compare@1.4.0: {}
 
-  next@14.2.5(react-dom@16.14.0(react@16.14.0))(react@16.14.0):
-    dependencies:
-      '@next/env': 14.2.5
-      '@swc/helpers': 0.5.5
-      busboy: 1.6.0
-      caniuse-lite: 1.0.30001647
-      graceful-fs: 4.2.11
-      postcss: 8.4.31
-      react: 16.14.0
-      react-dom: 16.14.0(react@16.14.0)
-      styled-jsx: 5.1.1(react@16.14.0)
-    optionalDependencies:
-      '@next/swc-darwin-arm64': 14.2.5
-      '@next/swc-darwin-x64': 14.2.5
-      '@next/swc-linux-arm64-gnu': 14.2.5
-      '@next/swc-linux-arm64-musl': 14.2.5
-      '@next/swc-linux-x64-gnu': 14.2.5
-      '@next/swc-linux-x64-musl': 14.2.5
-      '@next/swc-win32-arm64-msvc': 14.2.5
-      '@next/swc-win32-ia32-msvc': 14.2.5
-      '@next/swc-win32-x64-msvc': 14.2.5
-    transitivePeerDependencies:
-      - '@babel/core'
-      - babel-plugin-macros
-
   next@14.2.5(react-dom@18.3.1(react@18.3.1))(react@18.3.1):
     dependencies:
       '@next/env': 14.2.5
@@ -5581,11 +5571,6 @@ snapshots:
       min-indent: 1.0.1
 
   strip-json-comments@3.1.1: {}
-
-  styled-jsx@5.1.1(react@16.14.0):
-    dependencies:
-      client-only: 0.0.1
-      react: 16.14.0
 
   styled-jsx@5.1.1(react@18.3.1):
     dependencies:

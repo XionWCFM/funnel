@@ -34,9 +34,9 @@
     "@xionhub/funnel-core": "workspace:*"
   },
   "peerDependencies": {
-    "react": "^16",
-    "react-dom": "^16",
-    "qs": "^6",
-    "@xionhub/funnel-core": "^0"
+    "react": ">=16.8.0",
+    "react-dom": ">=16.8.0",
+    "qs": ">=6",
+    "@xionhub/funnel-core": ">=0"
   }
 }

@@ -35,9 +35,10 @@ We aim for code that allows you to see at a glance how the funnel should behave.
 ### Requirements
 
 ```
-qs : ^6
-next : ^13
-react : ^16
+qs : >=6
+next : >=13
+react : >=16.8
+react-dom : >=16.8
 ```
 
 ### Installation

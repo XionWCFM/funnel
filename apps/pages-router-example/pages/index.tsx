@@ -1,3 +1,9 @@
+import { BasicFunnel } from "~/src/basic-funnel";
+
 export default function Home() {
-  return <div>.</div>;
+  return (
+    <div>
+      <BasicFunnel />
+    </div>
+  );
 }

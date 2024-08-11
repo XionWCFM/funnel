@@ -36,9 +36,9 @@
   "peerDependencies": {
     "@xionhub/funnel-core": "^0",
     "@xionhub/funnel-client": "^0",
-    "next": "^11",
-    "qs": "^6",
-    "react": "^16",
-    "react-dom": "^16"
+    "next": ">=11",
+    "qs": ">=6",
+    "react": ">=16.8.0",
+    "react-dom": ">=16.8.0"
   }
 }
