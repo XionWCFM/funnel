@@ -230,9 +230,12 @@ declare const useFunnel: <Steps extends NonEmptyArray<string>>(
   },
   {
     createStep: (
-      step: Steps[number],
-      searchParams?: URLSearchParams,
-      deleteQueryParams?: string[] | string
+      step: string,
+      options: {
+        searchParams?: URLSearchParams;
+        deleteQueryParams?: string[] | string;
+        qsOptions?: QueryString.IStringifyBaseOptions;
+      }
     ) => string;
     funnelId: string;
     step: Steps[number] | undefined;
