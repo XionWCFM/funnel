@@ -1,6 +1,6 @@
 {
   "name": "@xionhub/funnel-react-router-dom-adapter",
-  "version": "0.0.3",
+  "version": "0.0.4",
   "private": false,
   "license": "MIT",
   "main": "./dist/index.js",
@@ -34,8 +34,8 @@
     "typescript": "latest"
   },
   "peerDependencies": {
-    "@xionhub/funnel-client": ">=0",
-    "@xionhub/funnel-core": ">=0",
+    "@xionhub/funnel-core": ">=0.0.4",
+    "@xionhub/funnel-client": ">=0.0.4",
     "qs": ">=6",
     "react": ">=16.8.0",
     "react-dom": ">=16.8.0",

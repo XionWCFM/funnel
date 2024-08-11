@@ -13,8 +13,9 @@ import type {
   StepProps,
 } from "./external/types";
 import { useCoreFunnel } from "./external/use-core-funnel";
+import { useFunnelDefaultStep } from "./external/use-funnel-default-step";
 
-export { useCoreFunnel, FunnelGuard, funnelOptions };
+export { useCoreFunnel, FunnelGuard, funnelOptions, useFunnelDefaultStep };
 
 export type {
   NonEmptyArray,

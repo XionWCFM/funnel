@@ -86,8 +86,12 @@ import { funnelOptions } from "@xionhub/funnel-core";
 
 const basicFunnelOptions = () =>
   funnelOptions({
+    // steps is a string array and represents a collection of funnels.
     steps: ["a", "b", "c"] as const,
+    // funnelId is the key value of queryString
     funnelId: "hello-this-is-funnel-id",
+    // defaultPrefix is ​​usually entered as pathname.
+    defaultPrefix: "/funnel",
   });
 ```
 
@@ -99,14 +103,15 @@ import { useFunnel } from "@xionhub/funnel-app-router-adapter";
 import { useRouter } from "next/navigation";
 
 export const BasicFunnel = () => {
-  const [Funnel, controller] = useFunnel(basicFunnelOptions());
+  const [Funnel, { createStep }] = useFunnel(basicFunnelOptions());
   const router = useRouter();
   return (
     <Funnel>
       <Funnel.Step name="a">
         <FunnelItem
           setStep={() => {
-            router.push(`/funnel?${controller.createStep("b")}`);
+            // equal router.push('/funnel?hello-this-is-funnel-id=b')
+            router.push(createStep("b"));
           }}
           step="a"
         />
@@ -114,7 +119,7 @@ export const BasicFunnel = () => {
       <Funnel.Step name="b">
         <FunnelItem
           setStep={() => {
-            router.push(`/funnel?${controller.createStep("c")}`);
+            router.push(createStep("c"));
           }}
           step="b"
         />
@@ -122,7 +127,7 @@ export const BasicFunnel = () => {
       <Funnel.Step name="c">
         <FunnelItem
           setStep={() => {
-            router.push(`/funnel?${controller.createStep("a")}`);
+            router.push(createStep("a"));
           }}
           step="c"
         />
@@ -163,6 +168,8 @@ export default function Page() {
 }
 ```
 
+The app router adapter relies on useSearchParams internally. This hook is necessary because it demands suspense
+
 # API
 
 ## useCoreFunnel
@@ -191,14 +198,24 @@ declare const useCoreFunnel: <Steps extends NonEmptyArray<string>>(
 ```tsx
 type FunnelOptions<T extends NonEmptyArray<string>> = {
   steps: T;
-  step?: T[number] | undefined;
+  step?: T[number] | undefined; // default undefined
   funnelId: string;
+  defaultPrefix?: string; // default ""
+  defaultAddQueryPrefix?: boolean; // default true
 };
 ```
 
 `funnelOptions` shares the same concept as queryOptions in tanstack query. Used to create a type-safe option object.
 
+`steps` is a string array that represents the number of cases in the funnel.
+
+`step` represents the current position in the funnel. When using an adapter, do not enter the steps because the adapter takes care of it.
+
 `funnelId` is generally used as the key value of querystring.
+
+`defaultPrefix` is ​​mainly used for pathname. Default is ""
+
+`defaultAddQueryPrefix` determines whether to include the "?" character in queryString. default is true.
 
 ## Guard
 
@@ -221,7 +238,7 @@ type GuardProps<T = boolean> = {
 
 `onRestrict` runs when condition is false.
 
-`conditionBy` is required if the value returned by condition is not boolean. It should return a boolean.
+`conditionBy` is required when condition is not a boolean or a function that returns a boolean. It should return a boolean.
 
 `fallback` is the fallback that will be displayed when the condition is Falsy.
 
@@ -241,6 +258,7 @@ declare const useFunnel: <Steps extends NonEmptyArray<string>>(
       options: {
         searchParams?: URLSearchParams;
         deleteQueryParams?: string[] | string;
+        prefix?: string;
         qsOptions?: QueryString.IStringifyBaseOptions;
       }
     ) => string;
@@ -263,13 +281,16 @@ Funnel Client provides utility functions to help manage query string funnels.
 
 ```tsx
 createStep(step:string , options:{
-    searchParams?: URLSearchParams;
-    deleteQueryParams?: string[] | string;
-    qsOptions?: QueryString.IStringifyBaseOptions;
+  searchParams?: URLSearchParams;
+  deleteQueryParams?: string[] | string;
+  prefix?: string;
+  qsOptions?: QueryString.IStringifyBaseOptions;
 })
 ```
 
 For deleteQueryParams, enter the key value of queryParams you want to delete. qsOptions uses StringifyBaseOptions from the qs library.
+
+In the case of `prefix` and `qsOptions.addQueryPrefix, if entered as options in createStep, the value is used. Otherwise, the value entered in funnelOptions is used.
 
 # Examples
 
@@ -287,6 +308,19 @@ To hide detail and increase cohesion, you may need to specify which step your fu
 
 In that case, use useEffect to move to the desired step when the current step is invalid.
 
+Another option is `useFunnelDefaultStep`
+
+```tsx
+import { funnelOptions, useFunnelDefaultStep } from "@xionhub/funnel-core";
+
+const [Funnel, { createStep, step }] = useFunnel(defaultStepFunnelOptions());
+const router = useRouter();
+
+useFunnelDefaultStep(step, () => {
+  router.replace(createStep("a"));
+});
+```
+
 ## Guard Example
 
 ```tsx
@@ -298,7 +332,7 @@ In that case, use useEffect to move to the desired step when the current step is
 >
   <FunnelItem
     setStep={() => {
-      router.push(`/guard?${controller.createStep("c")}`);
+      router.push(createStep("c"));
     }}
     step="b"
   />
@@ -322,7 +356,7 @@ If you pass a boolean to `condition`, children will be rendered when the conditi
 >
   <FunnelItem
     setStep={() => {
-      router.push(`/guard?${controller.createStep("c")}`);
+      router.push(controller.createStep("c"));
     }}
     step="b"
   />
@@ -363,7 +397,7 @@ By passing a promise or async function to `condition`, you can delay execution o
 >
   <FunnelItem
     setStep={() => {
-      router.push(`/guard?${controller.createStep("c")}`);
+      router.push(controller.createStep("c"));
     }}
     step="b"
   />
@@ -401,7 +435,7 @@ export const NestedFunnel = () => {
         <AFunnel.Step name={"astart"}>
           <FunnelItem
             setStep={() => {
-              router.push(`/nested?${aController.createStep("ado")}`);
+              router.push(aController.createStep("ado"));
             }}
             step={"astart"}
           />
@@ -410,7 +444,10 @@ export const NestedFunnel = () => {
           <FunnelItem
             setStep={() => {
               router.push(
-                `/nested?${bController.createStep("bstart", { searchParams, deleteQueryParams: aController.funnelId })}`
+                bController.createStep("bstart", {
+                  searchParams,
+                  deleteQueryParams: aController.funnelId,
+                })
               );
             }}
             step={"ado"}
@@ -419,7 +456,7 @@ export const NestedFunnel = () => {
         <AFunnel.Step name={"aend"}>
           <FunnelItem
             setStep={() => {
-              router.push(`/nested?${aController.createStep("astart")}`);
+              router.push(aController.createStep("astart"));
             }}
             step={"aend"}
           />
@@ -430,7 +467,7 @@ export const NestedFunnel = () => {
         <BFunnel.Step name={"bstart"}>
           <FunnelItem
             setStep={() => {
-              router.push(`/nested?${bController.createStep("bdo")}`);
+              router.push(bController.createStep("bdo"));
             }}
             step={"bstart"}
           />
@@ -438,7 +475,7 @@ export const NestedFunnel = () => {
         <BFunnel.Step name={"bdo"}>
           <FunnelItem
             setStep={() => {
-              router.push(`/nested?${bController.createStep("bend")}`);
+              router.push(bController.createStep("bend"));
             }}
             step={"bdo"}
           />
@@ -447,7 +484,10 @@ export const NestedFunnel = () => {
           <FunnelItem
             setStep={() => {
               router.push(
-                `/nested?${aController.createStep("aend", { searchParams, deleteQueryParams: bController.funnelId })}`
+                aController.createStep("aend", {
+                  searchParams,
+                  deleteQueryParams: bController.funnelId,
+                })
               );
             }}
             step={"bend"}

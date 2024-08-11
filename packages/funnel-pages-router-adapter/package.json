@@ -1,6 +1,6 @@
 {
   "name": "@xionhub/funnel-pages-router-adapter",
-  "version": "0.0.3",
+  "version": "0.0.4",
   "private": false,
   "license": "MIT",
   "main": "./dist/index.js",
@@ -34,8 +34,8 @@
     "typescript": "latest"
   },
   "peerDependencies": {
-    "@xionhub/funnel-core": "^0",
-    "@xionhub/funnel-client": "^0",
+    "@xionhub/funnel-core": ">=0.0.4",
+    "@xionhub/funnel-client": ">=0.0.4",
     "next": ">=11",
     "qs": ">=6",
     "react": ">=16.8.0",

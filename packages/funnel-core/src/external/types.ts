@@ -49,4 +49,6 @@ export type FunnelOptions<T extends NonEmptyArray<string>> = {
   steps: T;
   step?: T[number] | undefined;
   funnelId: string;
+  defaultPrefix?: string;
+  defaultAddQueryPrefix?: boolean;
 };

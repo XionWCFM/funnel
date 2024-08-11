@@ -8,9 +8,9 @@ import { aFunnelOptions } from "~/src/nested-funnel";
 export default function Home() {
   return (
     <div className=" flex flex-col gap-y-4">
-      <Link href={`/funnel?${new FunnelClient(basicFunnelOptions()).createStep("a")}`}>Go To Basic Funnel</Link>
-      <Link href={`/nested?${new FunnelClient(aFunnelOptions()).createStep("astart")}`}>Go To Nested Funnel</Link>
-      <Link href={`/guard?${new FunnelClient(guardFunnelOptions()).createStep("a")}`}>Go To Guard Funnel</Link>
+      <Link href={new FunnelClient(basicFunnelOptions()).createStep("a")}>Go To Basic Funnel</Link>
+      <Link href={new FunnelClient(aFunnelOptions()).createStep("astart")}>Go To Nested Funnel</Link>
+      <Link href={new FunnelClient(guardFunnelOptions()).createStep("a")}>Go To Guard Funnel</Link>
       <Link href={"/default-step"}>Go To Default Step Funnel</Link>
     </div>
   );
