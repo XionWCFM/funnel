@@ -7,6 +7,7 @@ export const basicFunnelOptions = () =>
   funnelOptions({
     steps: ["a", "b", "c"] as const,
     funnelId: "hello-this-is-funnel-id",
+    defaultPrefix: "/funnel",
   });
 
 type Props = {
@@ -15,14 +16,14 @@ type Props = {
 };
 
 export const BasicFunnel = () => {
-  const [Funnel, controller] = useFunnel(basicFunnelOptions());
+  const [Funnel, { createStep }] = useFunnel(basicFunnelOptions());
   const router = useRouter();
   return (
     <Funnel>
       <Funnel.Step name="a">
         <FunnelItem
           setStep={() => {
-            router.push(`/funnel?${controller.createStep("b")}`);
+            router.push(createStep("b"));
           }}
           step="a"
         />
@@ -30,7 +31,7 @@ export const BasicFunnel = () => {
       <Funnel.Step name="b">
         <FunnelItem
           setStep={() => {
-            router.push(`/funnel?${controller.createStep("c")}`);
+            router.push(createStep("c"));
           }}
           step="b"
         />
@@ -38,7 +39,7 @@ export const BasicFunnel = () => {
       <Funnel.Step name="c">
         <FunnelItem
           setStep={() => {
-            router.push(`/funnel?${controller.createStep("a")}`);
+            router.push(createStep("a"));
           }}
           step="c"
         />

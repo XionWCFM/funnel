@@ -11,7 +11,7 @@ function App() {
   // biome-ignore lint/correctness/useExhaustiveDependencies: <explanation>
   useEffect(() => {
     if (!step) {
-      navigate(`?${createStep("start")}`, { replace: true });
+      navigate(createStep("start"), { replace: true });
     }
   }, []);
 
@@ -22,7 +22,7 @@ function App() {
           <FunnelItem
             step={"start"}
             setStep={() => {
-              navigate(`?${createStep("do")}`);
+              navigate(createStep("do"));
             }}
           />
         </Funnel.Step>
@@ -30,7 +30,7 @@ function App() {
           <FunnelItem
             step={"do"}
             setStep={() => {
-              navigate(`?${createStep("end")}`);
+              navigate(createStep("end"));
             }}
           />
         </Funnel.Step>
@@ -38,7 +38,7 @@ function App() {
           <FunnelItem
             step={"end"}
             setStep={() => {
-              navigate(`?${createStep("start")}`);
+              navigate(createStep("start"));
             }}
           />
         </Funnel.Step>

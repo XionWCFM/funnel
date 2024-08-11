@@ -9,17 +9,18 @@ export const guardFunnelOptions = () =>
   funnelOptions({
     steps: ["a", "b", "c"] as const,
     funnelId: "guard-funnel",
+    defaultPrefix: "/guard",
   });
 
 export const GuardFunnel = () => {
-  const [Funnel, controller] = useFunnel(guardFunnelOptions());
+  const [Funnel, { createStep }] = useFunnel(guardFunnelOptions());
   const router = useRouter();
   return (
     <Funnel>
       <Funnel.Step name="a">
         <FunnelItem
           setStep={() => {
-            router.push(`/guard?${controller.createStep("b")}`);
+            router.push(createStep("b"));
           }}
           step="a"
         />
@@ -45,7 +46,7 @@ export const GuardFunnel = () => {
                 ),
             );
             if (confirm) {
-              router.push(`/guard?${controller.createStep("a")}`);
+              router.push(createStep("a"));
             } else {
               router.push("/");
             }
@@ -54,7 +55,7 @@ export const GuardFunnel = () => {
         >
           <FunnelItem
             setStep={() => {
-              router.push(`/guard?${controller.createStep("c")}`);
+              router.push(createStep("c"));
             }}
             step="b"
           />
@@ -64,7 +65,7 @@ export const GuardFunnel = () => {
       <Funnel.Step name="c">
         <FunnelItem
           setStep={() => {
-            router.push(`/guard?${controller.createStep("a")}`);
+            router.push(createStep("a"));
           }}
           step="c"
         />

@@ -1,12 +1,12 @@
-import { funnelOptions } from "@xionhub/funnel-core";
+"use client";
+import { funnelOptions, useFunnelDefaultStep } from "@xionhub/funnel-core";
 import { useFunnel } from "@xionhub/funnel-pages-router-adapter";
 import { useRouter } from "next/router";
-import { useEffect } from "react";
 
-export const basicFunnelOptions = () =>
+export const BasicFunnelOptions = () =>
   funnelOptions({
     steps: ["a", "b", "c"] as const,
-    funnelId: "hello-this-is-funnel-id",
+    funnelId: "default-step",
   });
 
 type Props = {
@@ -15,22 +15,19 @@ type Props = {
 };
 
 export const BasicFunnel = () => {
-  const [Funnel, controller] = useFunnel(basicFunnelOptions());
+  const [Funnel, { createStep, step }] = useFunnel(BasicFunnelOptions());
   const router = useRouter();
 
-  // biome-ignore lint/correctness/useExhaustiveDependencies: <explanation>
-  useEffect(() => {
-    if (!controller.step) {
-      router.replace(`?${controller.createStep("a")}`);
-    }
-  }, []);
+  useFunnelDefaultStep(step, () => {
+    router.replace(createStep("a"));
+  });
 
   return (
     <Funnel>
       <Funnel.Step name="a">
         <FunnelItem
           setStep={() => {
-            router.push(`?${controller.createStep("b")}`);
+            router.push(createStep("b"));
           }}
           step="a"
         />
@@ -38,7 +35,7 @@ export const BasicFunnel = () => {
       <Funnel.Step name="b">
         <FunnelItem
           setStep={() => {
-            router.push(`?${controller.createStep("c")}`);
+            router.push(createStep("c"));
           }}
           step="b"
         />
@@ -46,7 +43,7 @@ export const BasicFunnel = () => {
       <Funnel.Step name="c">
         <FunnelItem
           setStep={() => {
-            router.push(`?${controller.createStep("a")}`);
+            router.push(createStep("a"));
           }}
           step="c"
         />
