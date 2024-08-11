@@ -82,6 +82,37 @@ importers:
         specifier: ^5
         version: 5.5.4
 
+  apps/pages-router-example:
+    dependencies:
+      next:
+        specifier: 14.2.5
+        version: 14.2.5(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
+      react:
+        specifier: ^18
+        version: 18.3.1
+      react-dom:
+        specifier: ^18
+        version: 18.3.1(react@18.3.1)
+    devDependencies:
+      '@types/node':
+        specifier: ^20
+        version: 20.11.24
+      '@types/react':
+        specifier: ^18
+        version: 18.3.3
+      '@types/react-dom':
+        specifier: ^18
+        version: 18.3.0
+      postcss:
+        specifier: ^8
+        version: 8.4.40
+      tailwindcss:
+        specifier: ^3.4.1
+        version: 3.4.7
+      typescript:
+        specifier: ^5
+        version: 5.5.4
+
   apps/react-router-example:
     dependencies:
       react:
@@ -241,10 +272,10 @@ importers:
     dependencies:
       react:
         specifier: ^16
-        version: 18.3.1
+        version: 16.14.0
       react-dom:
         specifier: ^16
-        version: 18.3.1(react@18.3.1)
+        version: 16.14.0(react@16.14.0)
     devDependencies:
       '@types/qs':
         specifier: ^6.9.15
@@ -263,7 +294,7 @@ importers:
         version: 6.13.0
       react-router-dom:
         specifier: ^6.26.0
-        version: 6.26.0(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
+        version: 6.26.0(react-dom@16.14.0(react@16.14.0))(react@16.14.0)
       tsup:
         specifier: ^8.1.0
         version: 8.2.4(@swc/core@1.7.10(@swc/helpers@0.5.5))(jiti@1.21.6)(postcss@8.4.40)(typescript@5.5.4)(yaml@2.5.0)
@@ -5251,12 +5282,24 @@ snapshots:
 
   react-is@16.13.1: {}
 
+  react-router-dom@6.26.0(react-dom@16.14.0(react@16.14.0))(react@16.14.0):
+    dependencies:
+      '@remix-run/router': 1.19.0
+      react: 16.14.0
+      react-dom: 16.14.0(react@16.14.0)
+      react-router: 6.26.0(react@16.14.0)
+
   react-router-dom@6.26.0(react-dom@18.3.1(react@18.3.1))(react@18.3.1):
     dependencies:
       '@remix-run/router': 1.19.0
       react: 18.3.1
       react-dom: 18.3.1(react@18.3.1)
       react-router: 6.26.0(react@18.3.1)
+
+  react-router@6.26.0(react@16.14.0):
+    dependencies:
+      '@remix-run/router': 1.19.0
+      react: 16.14.0
 
   react-router@6.26.0(react@18.3.1):
     dependencies:
