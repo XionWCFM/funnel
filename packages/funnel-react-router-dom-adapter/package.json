@@ -34,10 +34,11 @@
     "typescript": "latest"
   },
   "peerDependencies": {
-    "@xionhub/funnel-client": "^0",
-    "@xionhub/funnel-core": "^0",
-    "qs": "^6",
-    "react": "^16",
-    "react-dom": "^16"
+    "@xionhub/funnel-client": ">=0",
+    "@xionhub/funnel-core": ">=0",
+    "qs": ">=6",
+    "react": ">=16.8.0",
+    "react-dom": ">=16.8.0",
+    "react-router-dom": ">=6"
   }
 }

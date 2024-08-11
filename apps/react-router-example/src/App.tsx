@@ -1,22 +1,20 @@
-import { FunnelClient } from "@xionhub/funnel-client";
-import { funnelOptions, useCoreFunnel } from "@xionhub/funnel-core";
+import { funnelOptions } from "@xionhub/funnel-core";
+import { useFunnel } from "@xionhub/funnel-react-router-dom-adapter";
 import { useEffect } from "react";
-import { useLocation, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 const basicFunnelOptions = () => funnelOptions({ funnelId: "hello", steps: ["start", "do", "end"] as const });
 
 function App() {
-  const location = useLocation();
-  const searchParams = new URLSearchParams(location.search);
-  const queryStep = searchParams.get(basicFunnelOptions().funnelId) ?? undefined;
-  // biome-ignore lint/suspicious/noExplicitAny: <explanation>
-  const [Funnel] = useCoreFunnel({ ...basicFunnelOptions(), step: queryStep as any });
-  const funnelClient = new FunnelClient(basicFunnelOptions());
   const navigate = useNavigate();
+  const [Funnel, { createStep, step }] = useFunnel(basicFunnelOptions());
+
+  // biome-ignore lint/correctness/useExhaustiveDependencies: <explanation>
   useEffect(() => {
-    if (!queryStep) {
-      navigate(`?${funnelClient.createStep("start")}`);
+    if (!step) {
+      navigate(`?${createStep("start")}`, { replace: true });
     }
-  });
+  }, []);
+
   return (
     <>
       <Funnel>
@@ -24,7 +22,7 @@ function App() {
           <FunnelItem
             step={"start"}
             setStep={() => {
-              navigate(`?${funnelClient.createStep("do")}`);
+              navigate(`?${createStep("do")}`);
             }}
           />
         </Funnel.Step>
@@ -32,7 +30,7 @@ function App() {
           <FunnelItem
             step={"do"}
             setStep={() => {
-              navigate(`?${funnelClient.createStep("end")}`);
+              navigate(`?${createStep("end")}`);
             }}
           />
         </Funnel.Step>
@@ -40,7 +38,7 @@ function App() {
           <FunnelItem
             step={"end"}
             setStep={() => {
-              navigate(`?${funnelClient.createStep("start")}`);
+              navigate(`?${createStep("start")}`);
             }}
           />
         </Funnel.Step>
