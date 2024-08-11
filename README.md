@@ -297,9 +297,11 @@ In the case of `prefix` and `qsOptions.addQueryPrefix`, if entered as options in
 ## Default Step Example
 
 ```tsx
+const [Funnel, { createStep, step }] = useFunnel(defaultStepFunnelOptions());
+
 useEffect(() => {
-  if (controller.step === undefined) {
-    router.replace(`/default-step?${controller.createStep("a")}`);
+  if (step === undefined) {
+    router.replace(createStep("a"));
   }
 }, []);
 ```
