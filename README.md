@@ -28,6 +28,30 @@ Many frameworks provide routers to change paths. Supporting all of this would be
 
 We aim for code that allows you to see at a glance how the funnel should behave.
 
+# Supported
+
+Currently officially supported are `next.js app router`, `next.js pages router`, `react-router-dom`.
+
+# Installation
+
+**nextjs app router**
+
+```
+npm i qs @xionhub/funnel-core @xionhub/funnel-client @xionhub/funnel-app-router-adapter
+```
+
+**nextjs pages router**
+
+```
+npm i qs @xionhub/funnel-core @xionhub/funnel-client @xionhub/funnel-pages-router-adapter
+```
+
+**react-router-dom**
+
+```
+npm i qs @xionhub/funnel-core @xionhub/funnel-client @xionhub/funnel-react-router-dom-adapter
+```
+
 # Quick Start
 
 ## next.js app router
@@ -251,6 +275,8 @@ Using createStep, you can create, delete, or update the query string for the nex
 
 ## Funnel Client
 
+Funnel Client provides utility functions to help manage query string funnels.
+
 ### FunnelClient.createStep
 
 ```tsx
@@ -351,6 +377,10 @@ export const NestedFunnel = () => {
 # Get More Example
 
 [App Router Example](https://github.com/XionWCFM/funnel/tree/main/apps/app-router-example)
+
+[Pages Router Example](https://github.com/XionWCFM/funnel/tree/main/apps/pages-router-example)
+
+[React Router Dom Example](https://github.com/XionWCFM/funnel/tree/main/apps/react-router-example)
 
 # License
 
