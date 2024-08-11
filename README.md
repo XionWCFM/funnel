@@ -225,24 +225,6 @@ type GuardProps<T = boolean> = {
 
 `fallback` is the fallback that will be displayed when the condition is Falsy.
 
-simple Example
-
-```tsx
- <Funnel.Guard
-    condition={Math.random() > 0.5}
-    onRestrict=() => {
-      router.replace('/home')
-    }}
-  >
-    <FunnelItem
-      setStep={() => {
-        router.push(`/guard?${controller.createStep("c")}`);
-      }}
-      step="b"
-    />
-  </Funnel.Guard>
-```
-
 ## useFunnel For App Router
 
 ```tsx
@@ -289,7 +271,110 @@ createStep(step:string , options:{
 
 For deleteQueryParams, enter the key value of queryParams you want to delete. qsOptions uses StringifyBaseOptions from the qs library.
 
-# Nested Funnel Example
+# Examples
+
+## Default Step Example
+
+```tsx
+useEffect(() => {
+  if (controller.step === undefined) {
+    router.replace(`/default-step?${controller.createStep("a")}`);
+  }
+}, []);
+```
+
+To hide detail and increase cohesion, you may need to specify which step your funnel should start with by default.
+
+In that case, use useEffect to move to the desired step when the current step is invalid.
+
+## Guard Example
+
+```tsx
+<Funnel.Guard
+  condition={Math.random() > 0.5}
+  onRestrict={() => {
+    router.replace("/home");
+  }}
+>
+  <FunnelItem
+    setStep={() => {
+      router.push(`/guard?${controller.createStep("c")}`);
+    }}
+    step="b"
+  />
+</Funnel.Guard>
+```
+
+If you pass a boolean to `condition`, children will be rendered when the condition is true, and if it is false, a `fallback` will be rendered and the `onRestirct` event will occur.
+
+```tsx
+<Funnel.Guard
+  condition={async () => {
+    if (Math.random() > 0.5) {
+      return true;
+    }
+    await new Promise((res) => setTimeout(res, 1000));
+    return false;
+  }}
+  onRestrict={() => {
+    router.replace("/home");
+  }}
+>
+  <FunnelItem
+    setStep={() => {
+      router.push(`/guard?${controller.createStep("c")}`);
+    }}
+    step="b"
+  />
+</Funnel.Guard>
+```
+
+By passing a promise or async function to `condition`, you can delay execution of the onRestrict function until the promise is completed.
+
+```tsx
+<Funnel.Guard
+  condition={async () => {
+    if (Math.random() > 0.5) {
+      return {
+        type: "A",
+        condition: false,
+      };
+    }
+    if (Math.random() > 0.5) {
+      return {
+        type: "B",
+        condition: false,
+      };
+    }
+    return {
+      type: "",
+      condition: true,
+    };
+  }}
+  conditionBy={({ condition }) => condition}
+  onRestrict={({ type }) => {
+    if (type === "A") {
+      router.replace("/a");
+    }
+    if (type === "B") {
+      router.replace("/b");
+    }
+  }}
+>
+  <FunnelItem
+    setStep={() => {
+      router.push(`/guard?${controller.createStep("c")}`);
+    }}
+    step="b"
+  />
+</Funnel.Guard>
+```
+
+`condition` can return other values ​​instead of Boolean. If you didn't return a boolean instead, You need to convert the value to boolean via `conditionBy`.
+
+Because the return value of `condition` is passed to `onRestrict` and `conditionBy`, inaccessibility processing can be performed in various ways.
+
+## Nested Funnel Example
 
 ```tsx
 export const aFunnelOptions = () =>
@@ -373,6 +458,10 @@ export const NestedFunnel = () => {
   );
 };
 ```
+
+When implementing nested funnels, there are times when you may want to intentionally not represent a specific funnel.
+
+In that case, use createStep's deleteQueryParams to remove the Funnel from the screen.
 
 # Get More Example
 
