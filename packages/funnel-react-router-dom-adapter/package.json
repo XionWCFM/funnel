@@ -26,15 +26,16 @@
   "devDependencies": {
     "@types/qs": "^6.9.15",
     "@types/react": "^18",
-    "@xionhub/funnel-core": "workspace:*",
     "@xionhub/funnel-client": "workspace:*",
+    "@xionhub/funnel-core": "workspace:*",
     "qs": "^6.13.0",
+    "react-router-dom": "^6.26.0",
     "tsup": "^8.1.0",
     "typescript": "latest"
   },
   "peerDependencies": {
-    "@xionhub/funnel-core": "^0",
     "@xionhub/funnel-client": "^0",
+    "@xionhub/funnel-core": "^0",
     "qs": "^6",
     "react": "^16",
     "react-dom": "^16"

@@ -11,14 +11,15 @@
   },
   "dependencies": {
     "react": "^18.3.1",
-    "react-dom": "^18.3.1"
+    "react-dom": "^18.3.1",
+    "react-router-dom": "^6.26.0"
   },
   "devDependencies": {
     "@types/react": "^18.3.3",
     "@types/react-dom": "^18.3.0",
-    "@xionhub/funnel-core": "workspace:*",
-    "@xionhub/funnel-client": "workspace:*",
     "@vitejs/plugin-react-swc": "^3.5.0",
+    "@xionhub/funnel-client": "workspace:*",
+    "@xionhub/funnel-core": "workspace:*",
     "globals": "^15.9.0",
     "typescript": "^5.5.3",
     "typescript-eslint": "^8.0.0",
