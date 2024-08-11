@@ -163,6 +163,40 @@ importers:
         specifier: latest
         version: 5.5.4
 
+  packages/funnel-pages-router-adapter:
+    dependencies:
+      react:
+        specifier: ^16
+        version: 16.14.0
+      react-dom:
+        specifier: ^16
+        version: 16.14.0(react@16.14.0)
+    devDependencies:
+      '@types/qs':
+        specifier: ^6.9.15
+        version: 6.9.15
+      '@types/react':
+        specifier: ^18
+        version: 18.3.3
+      '@xionhub/funnel-client':
+        specifier: workspace:*
+        version: link:../funnel-client
+      '@xionhub/funnel-core':
+        specifier: workspace:*
+        version: link:../funnel-core
+      next:
+        specifier: ^14.2.5
+        version: 14.2.5(react-dom@16.14.0(react@16.14.0))(react@16.14.0)
+      qs:
+        specifier: ^6.13.0
+        version: 6.13.0
+      tsup:
+        specifier: ^8.1.0
+        version: 8.2.4(jiti@1.21.6)(postcss@8.4.40)(typescript@5.5.4)(yaml@2.5.0)
+      typescript:
+        specifier: latest
+        version: 5.5.4
+
 packages:
 
   '@aashutoshrathi/word-wrap@1.2.6':
