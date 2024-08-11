@@ -290,7 +290,7 @@ createStep(step:string , options:{
 
 For deleteQueryParams, enter the key value of queryParams you want to delete. qsOptions uses StringifyBaseOptions from the qs library.
 
-In the case of `prefix` and `qsOptions.addQueryPrefix, if entered as options in createStep, the value is used. Otherwise, the value entered in funnelOptions is used.
+In the case of `prefix` and `qsOptions.addQueryPrefix`, if entered as options in createStep, the value is used. Otherwise, the value entered in funnelOptions is used.
 
 # Examples
 
