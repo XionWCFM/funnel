@@ -1,10 +1,9 @@
 {
   "name": "@xionhub/funnel-client",
-  "version": "0.0.2",
+  "version": "0.0.3",
   "private": false,
   "license": "MIT",
   "main": "./dist/index.js",
-
   "exports": {
     ".": {
       "import": {
@@ -18,7 +17,6 @@
     }
   },
   "files": ["dist"],
-
   "scripts": {
     "build": "tsup"
   },
@@ -34,9 +32,9 @@
     "@xionhub/funnel-core": "workspace:*"
   },
   "peerDependencies": {
-    "react": "^16",
-    "react-dom": "^16",
-    "qs": "^6",
-    "@xionhub/funnel-core": "^0"
+    "react": ">=16.8.0",
+    "react-dom": ">=16.8.0",
+    "qs": ">=6",
+    "@xionhub/funnel-core": ">=0"
   }
 }

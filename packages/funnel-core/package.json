@@ -1,6 +1,6 @@
 {
   "name": "@xionhub/funnel-core",
-  "version": "0.0.2",
+  "version": "0.0.3",
   "private": false,
   "license": "MIT",
   "main": "./dist/index.js",
@@ -29,7 +29,7 @@
     "typescript": "latest"
   },
   "peerDependencies": {
-    "react": "^16",
-    "react-dom": "^16"
+    "react": ">=16.8.0",
+    "react-dom": ">=16.8.0"
   }
 }

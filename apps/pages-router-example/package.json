@@ -1,0 +1,30 @@
+{
+  "name": "pages-router-example",
+  "version": "0.1.0",
+  "private": true,
+  "scripts": {
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start",
+    "lint": "next lint"
+  },
+  "dependencies": {
+    "next": "14.2.5",
+    "react": "^18",
+    "qs": "^6.13.0",
+    "@xionhub/funnel-client": "workspace:*",
+    "@xionhub/funnel-core": "workspace:*",
+    "@xionhub/funnel-pages-router-adapter": "workspace:*",
+    "react-dom": "^18"
+  },
+  "devDependencies": {
+    "@types/node": "^20",
+    "@types/qs": "^6.9.15",
+    "@types/react": "^18",
+    "@types/react-dom": "^18",
+
+    "postcss": "^8",
+    "tailwindcss": "^3.4.1",
+    "typescript": "^5"
+  }
+}
