@@ -1,6 +1,6 @@
 {
   "name": "@xionhub/funnel-react-router-dom-adapter",
-  "version": "0.0.2",
+  "version": "0.0.3",
   "private": false,
   "license": "MIT",
   "main": "./dist/index.js",
