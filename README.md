@@ -275,7 +275,15 @@ Using createStep, you can create, delete, or update the query string for the nex
 
 ## Funnel Client
 
-Funnel Client provides utility functions to help manage query string funnels.
+`funnel client` is a class that receives funneloptions as a parameter.
+
+```tsx
+<Link href={new FunnelClient(basicFunnelOptions()).createStep("a")}>
+  Go To Basic Funnel
+</Link>
+```
+
+it doesn't depend on React, you can create the necessary steps anywhere as long as you have funnelOptions.
 
 ### FunnelClient.createStep
 
@@ -291,6 +299,12 @@ createStep(step:string , options:{
 For deleteQueryParams, enter the key value of queryParams you want to delete. qsOptions uses StringifyBaseOptions from the qs library.
 
 In the case of `prefix` and `qsOptions.addQueryPrefix`, if entered as options in createStep, the value is used. Otherwise, the value entered in funnelOptions is used.
+
+If you are dealing with multiple funnels or using query strings for other purposes, it is recommended to enter `searchParams`. When `searchParams` are input, a new funnel step is updated while maintaining the searchParams.
+
+`deleteQueryParams` is meaningful when there is a searchParams input.
+
+This is used to clear queryStrings that are no longer used in searchParams and is mainly used to control rendering in nested funnel use cases.
 
 # Examples
 
