@@ -1,6 +1,6 @@
 {
   "name": "@xionhub/funnel-pages-router-adapter",
-  "version": "0.0.4",
+  "version": "0.0.5",
   "private": false,
   "license": "MIT",
   "main": "./dist/index.js",

@@ -285,6 +285,8 @@ Using createStep, you can create, delete, or update the query string for the nex
 
 it doesn't depend on React, you can create the necessary steps anywhere as long as you have funnelOptions.
 
+Since it can be used on servers without any problems, you can create a route to the funnel anywhere.
+
 ### FunnelClient.createStep
 
 ```tsx
